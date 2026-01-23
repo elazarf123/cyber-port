@@ -6,7 +6,7 @@ img: handlersjournal.png
 alt: image-alt
 
 # Add the link to your journal below
-project-url: https://drive.google.com/file/d/1J0xWDcbabofsBLunUQ95bepQqy2kU3EE/view?usp=sharing
+project-url: https://docs.google.com/document/d/1MwV8yYPcSysbjkdFyk__lDbGWt8kmqZsCuYy_Skgyf8/edit?usp=sharing
  
 description: Provided clear and concise written documentation of cybersecurity events, including detailed event descriptions, tools used, and lessons learned throughout the process.
 ---

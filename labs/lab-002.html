@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 002 — LDAPS & PKI Certificate Lab | EF_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#050a0e;--bg2:#080f14;--panel:#0a1520;--panel2:#0d1c2a;--accent:#00d4ff;--accent2:#00ff88;--accent3:#ff3366;--text:#c8e8f0;--text-dim:#4a7a8a;--text-bright:#e8f8ff;--border:#1a3a4a;--mono:'Share Tech Mono',monospace;--head:'Orbitron',monospace;--body:'Rajdhani',sans-serif; }
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.015) 2px,rgba(0,212,255,0.015) 4px);pointer-events:none;z-index:9999}
+  nav{position:fixed;top:0;width:100%;background:rgba(5,10,14,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;padding:0 2rem}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-family:var(--head);font-size:0.85rem;color:var(--accent);letter-spacing:0.2em;text-decoration:none}
+  .nav-back{font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s}
+  .nav-back:hover{color:var(--accent)}
+  .lab-hero{padding:120px 2rem 60px;max-width:1100px;margin:0 auto}
+  .lab-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem}
+  .lab-title{font-family:var(--head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:1.5rem}
+  .lab-subtitle{font-size:1.1rem;color:var(--text-dim);max-width:700px;margin-bottom:2rem}
+  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem}
+  .tag{font-family:var(--mono);font-size:0.6rem;color:var(--accent2);border:1px solid rgba(0,255,136,0.3);padding:0.3rem 0.6rem;letter-spacing:0.1em}
+  .divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+  .content{max-width:1100px;margin:0 auto;padding:0 2rem 80px}
+  .section{margin-bottom:3rem}
+  .section-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.75rem}
+  .section-title{font-family:var(--head);font-size:1.1rem;color:var(--text-bright);margin-bottom:1.25rem;letter-spacing:0.05em}
+  pxcolor:var(--text);margin-bottom:1rem;font-size:1rem}
+  .steps{display:flex;flex-direction:column;gap:1.5rem}
+  .step{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.5rem}
+  .step-num{font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.2em;margin-bottom:0.5rem}
+  .step-title{font-family:var(--head);font-size:0.85rem;color:var(--text-bright);margin-bottom:0.75rem}
+  .step p{font-size:0.95rem}
+  .terminal{background:#020810;border:1px solid var(--border);margin:1rem 0;overflow:hidden}
+  .terminal-bar{background:#0a1520;border-bottom:1px solid var(--border);padding:0.5rem 1rem;display:flex;align-items:center;gap:0.5rem}
+  .t-dot{width:10px;height:10px;border-radius:50%}
+  .t-red{background:#ff3366}.t-yellow{background:#ffcc00}.t-green{background:#00ff88}
+  .t-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);margin-left:0.5rem;letter-spacing:0.1em}
+  .terminal-body{padding:1.25rem 1.5rem;font-family:var(--mono);font-size:0.78rem;line-height:1.8}
+  .cmd{color:var(--accent2)}.cmt{color:var(--text-dim)}.out{color:var(--text)}.prompt{color:var(--accent)}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem}
+  .info-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem}
+  .info-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:0.4rem}
+  .info-value{font-family:var(--head);font-size:0.85rem;color:var(--accent)}
+  .outcome{background:var(--panel2);border:1px solid rgba(0,255,136,0.2);border-left:3px solid var(--accent2);padding:1.5rem}
+  .outcome ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+  .outcome li::before{content:'▸ ';color:var(--accent2)}
+  .outcome li{font-size:0.95rem}
+  .back-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;border:1px solid var(--border);padding:0.6rem 1.2rem;letter-spacing:0.1em;transition:all 0.2s;margin-top:1rem}
+  .back-btn:hover{color:var(--accent);border-color:var(--accent)}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="../index.html" class="nav-logo">EF_<span style="color:var(--accent2)">SYS</span></a><a href="../index.html#labs" class="nav-back">← BACK TO PORTFOLIO</a></div></nav>
+
+<div class="lab-hero">
+  <div class="lab-label">// LAB 002 — HANDS_ON_LABS</div>
+  <h1 class="lab-title">LDAPS &amp; PKI<br>Certificate Lab</h1>
+  <p class="lab-subtitle">Deployed an Enterprise Root CA using AD Certificate Services, issued server certificates, and enabled LDAP over SSL on port 636 — hardening the AD environment against cleartext directory queries.</p>
+  <div class="tag-row">
+    <span class="tag">AD CS</span><span class="tag">PKI</span><span class="tag">LDAPS</span><span class="tag">Port 636</span><span class="tag">ldp.exe</span><span class="tag">TLS</span><span class="tag">certutil</span>
+  </div>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">PREREQUISITE</div><div class="info-value">LAB 001 Domain</div></div>
+    <div class="info-card"><div class="info-label">CA TYPE</div><div class="info-value">Enterprise Root CA</div></div>
+    <div class="info-card"><div class="info-label">PROTOCOL</div><div class="info-value">LDAPS / TLS 1.2+</div></div>
+    <div class="info-card"><div class="info-label">VERIFIED WITH</div><div class="info-value">ldp.exe + certutil</div></div>
+  </div>
+</div>
+
+<div class="content">
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">// OBJECTIVE</div>
+    <div class="section-title">WHY LDAPS MATTERS</div>
+    <p>Standard LDAP transmits directory queries in cleartext on port 389 — including credential bind operations. In any compliance-regulated environment (HIPAA, NIST, DoD), LDAPS on port 636 is a baseline requirement. This lab walks through deploying PKI from scratch and enforcing encrypted directory communication.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// WALKTHROUGH</div>
+    <div class="section-title">STEP-BY-STEP EXECUTION</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">INSTALL ACTIVE DIRECTORY CERTIFICATE SERVICES</div>
+        <p>Installed the AD CS role on DC01. Chose Enterprise Root CA (not Standalone) so certificates are automatically trusted by all domain members via Group Policy.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+          <div class="terminal-body">
+<span class="prompt">PS C:\></span> <span class="cmd">Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools</span><br><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Install-AdcsCertificationAuthority `</span><br>
+<span class="cmd">  -CAType EnterpriseRootCa `</span><br>
+<span class="cmd">  -CaCommonName "CORP-ROOT-CA" `</span><br>
+<span class="cmd">  -KeyLength 2048 `</span><br>
+<span class="cmd">  -HashAlgorithmName SHA256 `</span><br>
+<span class="cmd">  -ValidityPeriod Years `</span><br>
+<span class="cmd">  -ValidityPeriodUnits 5 `</span><br>
+<span class="cmd">  -Force</span><br><br>
+<span class="out">CertificationAuthority installation succeeded.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">ISSUE A DOMAIN CONTROLLER CERTIFICATE</div>
+        <p>Requested a certificate for the DC using the built-in "Domain Controller" template. This is the certificate LDAPS binds to — without it, the DC won't serve LDAP over SSL even if the CA is installed.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">cmd — DC01 (certlm.msc)</span></div>
+          <div class="terminal-body">
+<span class="cmt"># Via MMC: certlm.msc → Personal → Certificates → Request New Certificate</span><br>
+<span class="cmt"># Selected template: Domain Controller</span><br>
+<span class="cmt"># Subject: CN=DC01.corp.local</span><br>
+<span class="cmt"># SAN: DNS=DC01.corp.local, DNS=corp.local</span><br><br>
+<span class="cmt"># Verify certificate issued</span><br>
+<span class="prompt">C:\></span> <span class="cmd">certutil -store My</span><br>
+<span class="out">================ Certificate 0 ================</span><br>
+<span class="out">Subject: CN=DC01.corp.local</span><br>
+<span class="out">Issuer: CN=CORP-ROOT-CA, DC=corp, DC=local</span><br>
+<span class="out">NotAfter: [1 year from issue date]</span><br>
+<span class="out">Enhanced Key Usage: Server Authentication (1.3.6.1.5.5.7.3.1)</span><br>
+<span class="out">              Client Authentication (1.3.6.1.5.5.7.3.2)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">VERIFY LDAPS IS ACTIVE ON PORT 636</div>
+        <p>After the DC certificate is issued and the LDAP service restarts, port 636 should be open. Verified using both netstat and ldp.exe with SSL enabled.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">cmd — DC01</span></div>
+          <div class="terminal-body">
+<span class="cmt"># Restart LDAP service to pick up new certificate</span><br>
+<span class="prompt">C:\></span> <span class="cmd">net stop "Active Directory Domain Services" && net start "Active Directory Domain Services"</span><br><br>
+<span class="cmt"># Confirm port 636 is listening</span><br>
+<span class="prompt">C:\></span> <span class="cmd">netstat -an | findstr :636</span><br>
+<span class="out">  TCP    0.0.0.0:636    0.0.0.0:0    LISTENING</span><br>
+<span class="out">  TCP    [::]:636       [::]:0       LISTENING</span><br><br>
+<span class="cmt"># Test with ldp.exe: Connection → Connect → DC01, Port 636, SSL checked</span><br>
+<span class="out">res = ldap_sslinit("DC01", 636, 1);</span><br>
+<span class="out">Established connection to DC01.</span><br>
+<span class="out">Retrieving base DSA information...</span><br>
+<span class="out">Result &lt;0&gt;: (null)</span><br>
+<span class="out">Matched DNs: </span><br>
+<span class="out">Getting 1 entries:</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 04</div>
+        <div class="step-title">VERIFY TLS ENCRYPTION ON LDAP QUERIES</div>
+        <p>Used certutil's LDAP diagnostic mode to confirm that queries over port 636 are TLS-encrypted and the certificate chain resolves correctly to the Enterprise Root CA.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">cmd — DC01</span></div>
+          <div class="terminal-body">
+<span class="prompt">C:\></span> <span class="cmd">certutil -verify -urlfetch C:\cert.cer</span><br>
+<span class="out">Verified Issuance Policies: None</span><br>
+<span class="out">Verified Application Policies:</span><br>
+<span class="out">    1.3.6.1.5.5.7.3.1 Server Authentication</span><br>
+<span class="out">    1.3.6.1.5.5.7.3.2 Client Authentication</span><br>
+<span class="out">Leaf certificate revocation check passed</span><br>
+<span class="out">CertUtil: -verify command completed successfully.</span><br><br>
+<span class="cmt"># Confirm CA cert distributed to domain clients via GPO autoenrollment</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Get-ChildItem Cert:\LocalMachine\Root | Where {$_.Subject -like "*CORP-ROOT-CA*"}</span><br>
+<span class="out">Thumbprint                                Subject</span><br>
+<span class="out">----------                                -------</span><br>
+<span class="out">A1B2C3D4E5F6...                          CN=CORP-ROOT-CA, DC=corp, DC=local</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// OUTCOME</div>
+    <div class="section-title">RESULTS</div>
+    <div class="outcome">
+      <ul>
+        <li>Enterprise Root CA deployed on DC01 — <strong style="color:var(--text-bright)">CORP-ROOT-CA</strong> with 5-year validity, SHA-256, 2048-bit key</li>
+        <li>Domain Controller certificate issued via "Domain Controller" template, covering DC01.corp.local SAN</li>
+        <li>LDAPS active and verified on <strong style="color:var(--text-bright)">port 636</strong> — confirmed via netstat and ldp.exe SSL bind</li>
+        <li>TLS encryption on all LDAP queries verified — cleartext port 389 queries can now be blocked</li>
+        <li>Root CA certificate automatically distributed to all domain members via GPO autoenrollment</li>
+        <li>Certificate chain validated end-to-end using certutil -verify</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// RELATED LABS</div>
+    <div class="section-title">CONNECTED WORK</div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="lab-001.html" style="color:var(--accent);font-family:var(--mono);font-size:0.75rem;border:1px solid var(--border);padding:0.5rem 1rem;text-decoration:none" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">← LAB 001: AD Domain Lab</a>
+      <a href="lab-003.html" style="color:var(--accent);font-family:var(--mono);font-size:0.75rem;border:1px solid var(--border);padding:0.5rem 1rem;text-decoration:none" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">LAB 003 → PowerShell Automation</a>
+    </div>
+  </div>
+  <a href="../index.html#labs" class="back-btn">← BACK TO ALL LABS</a>
+</div>
+</body>
+</html>

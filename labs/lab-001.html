@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 001 — 3-VM Active Directory Domain Lab | EF_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0e; --bg2: #080f14; --panel: #0a1520; --panel2: #0d1c2a;
+    --accent: #00d4ff; --accent2: #00ff88; --accent3: #ff3366;
+    --text: #c8e8f0; --text-dim: #4a7a8a; --text-bright: #e8f8ff;
+    --border: #1a3a4a;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Orbitron', monospace;
+    --body: 'Rajdhani', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.015) 2px, rgba(0,212,255,0.015) 4px); pointer-events: none; z-index: 9999; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; background: rgba(5,10,14,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 0 2rem; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-logo { font-family: var(--head); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.2em; text-decoration: none; }
+  .nav-back { font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+  .nav-back:hover { color: var(--accent); }
+
+  /* HERO */
+  .lab-hero { padding: 120px 2rem 60px; max-width: 1100px; margin: 0 auto; }
+  .lab-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lab-title { font-family: var(--head); font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-bright); line-height: 1.2; margin-bottom: 1.5rem; }
+  .lab-subtitle { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; margin-bottom: 2rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .tag { font-family: var(--mono); font-size: 0.6rem; color: var(--accent2); border: 1px solid rgba(0,255,136,0.3); padding: 0.3rem 0.6rem; letter-spacing: 0.1em; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  /* CONTENT */
+  .content { max-width: 1100px; margin: 0 auto; padding: 0 2rem 80px; }
+  .section { margin-bottom: 3rem; }
+  .section-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--head); font-size: 1.1rem; color: var(--text-bright); margin-bottom: 1.25rem; letter-spacing: 0.05em; }
+  p { color: var(--text); margin-bottom: 1rem; font-size: 1rem; }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 1.5rem; }
+  .step { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.5rem; position: relative; }
+  .step-num { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+  .step-title { font-family: var(--head); font-size: 0.85rem; color: var(--text-bright); margin-bottom: 0.75rem; }
+  .step p { font-size: 0.95rem; }
+
+  /* TERMINAL */
+  .terminal { background: #020810; border: 1px solid var(--border); border-radius: 0; margin: 1rem 0; overflow: hidden; }
+  .terminal-bar { background: #0a1520; border-bottom: 1px solid var(--border); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-red { background: #ff3366; } .t-yellow { background: #ffcc00; } .t-green { background: #00ff88; }
+  .t-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); margin-left: 0.5rem; letter-spacing: 0.1em; }
+  .terminal-body { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 0.78rem; line-height: 1.8; }
+  .cmd { color: var(--accent2); }
+  .cmt { color: var(--text-dim); }
+  .out { color: var(--text); }
+  .prompt { color: var(--accent); }
+
+  /* INFO CARDS */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .info-card { background: var(--panel); border: 1px solid var(--border); padding: 1.25rem; }
+  .info-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.2em; margin-bottom: 0.4rem; }
+  .info-value { font-family: var(--head); font-size: 0.85rem; color: var(--accent); }
+
+  /* OUTCOME */
+  .outcome { background: var(--panel2); border: 1px solid rgba(0,255,136,0.2); border-left: 3px solid var(--accent2); padding: 1.5rem; }
+  .outcome ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .outcome li::before { content: '▸ '; color: var(--accent2); }
+  .outcome li { font-size: 0.95rem; }
+
+  /* BACK BTN */
+  .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); padding: 0.6rem 1.2rem; letter-spacing: 0.1em; transition: all 0.2s; margin-top: 1rem; }
+  .back-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  @media (max-width: 600px) { .lab-hero, .content { padding-left: 1rem; padding-right: 1rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">EF_<span>SYS</span></a>
+    <a href="../index.html#labs" class="nav-back">← BACK TO PORTFOLIO</a>
+  </div>
+</nav>
+
+<div class="lab-hero">
+  <div class="lab-label">// LAB 001 — HANDS_ON_LABS</div>
+  <h1 class="lab-title">3-VM Active Directory<br>Domain Lab</h1>
+  <p class="lab-subtitle">Built a fully functional multi-machine AD environment from scratch — domain controller, client machines, OU structure, group policies, and DNS — simulating a real enterprise network in VirtualBox.</p>
+  <div class="tag-row">
+    <span class="tag">Server 2019</span><span class="tag">Active Directory</span><span class="tag">GPO</span>
+    <span class="tag">VirtualBox</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">gpresult</span>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">PLATFORM</div><div class="info-value">VirtualBox 7.x</div></div>
+    <div class="info-card"><div class="info-label">OS</div><div class="info-value">Windows Server 2019 + Win10</div></div>
+    <div class="info-card"><div class="info-label">MACHINES</div><div class="info-value">1 DC + 2 Clients</div></div>
+    <div class="info-card"><div class="info-label">DOMAIN</div><div class="info-value">corp.local</div></div>
+  </div>
+</div>
+
+<div class="content">
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">// OBJECTIVE</div>
+    <div class="section-title">WHAT I SET OUT TO PROVE</div>
+    <p>Build a realistic Active Directory domain environment that mirrors what you'd find in an enterprise — not just "install AD and call it done," but a fully configured forest with meaningful OU structure, working Group Policy, joined clients, and DNS resolution. Every configuration decision had to be deliberate and documentable.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// ENVIRONMENT</div>
+    <div class="section-title">LAB SETUP</div>
+    <p>Three VMs on a VirtualBox internal network (intnet) so machines can communicate without internet exposure. Static IPs assigned manually. Server 2019 licensed via Microsoft Evaluation Center.</p>
+    <div class="terminal">
+      <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">network_layout.txt</span></div>
+      <div class="terminal-body">
+<span class="cmt"># VM Configuration</span><br>
+<span class="out">DC01       Windows Server 2019    192.168.10.1    Domain Controller</span><br>
+<span class="out">CLIENT01   Windows 10 Pro         192.168.10.10   Domain Member</span><br>
+<span class="out">CLIENT02   Windows 10 Pro         192.168.10.11   Domain Member</span><br><br>
+<span class="cmt"># VirtualBox Network: Internal Network (intnet)</span><br>
+<span class="cmt"># DNS on clients points to DC01 (192.168.10.1)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// WALKTHROUGH</div>
+    <div class="section-title">STEP-BY-STEP EXECUTION</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">INSTALL AD DS AND PROMOTE TO DOMAIN CONTROLLER</div>
+        <p>Installed the Active Directory Domain Services role via PowerShell, then ran the forest promotion. Chose <code style="color:var(--accent2)">corp.local</code> as the domain name, set the functional level to Windows Server 2016, and configured the DSRM password.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+          <div class="terminal-body">
+<span class="prompt">PS C:\></span> <span class="cmd">Install-WindowsFeature AD-Domain-Services -IncludeManagementTools</span><br><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Install-ADDSForest `</span><br>
+<span class="cmd">  -DomainName "corp.local" `</span><br>
+<span class="cmd">  -DomainNetbiosName "CORP" `</span><br>
+<span class="cmd">  -ForestMode "WinThreshold" `</span><br>
+<span class="cmd">  -DomainMode "WinThreshold" `</span><br>
+<span class="cmd">  -InstallDns `</span><br>
+<span class="cmd">  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `</span><br>
+<span class="cmd">  -Force</span><br><br>
+<span class="out">WARNING: Windows Server 2019 domain controller will reboot automatically...</span><br>
+<span class="out">The operation completed successfully.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">DESIGN AND BUILD THE OU HIERARCHY</div>
+        <p>Created a realistic OU structure reflecting department-based administration — matching what you'd manage in a mid-size enterprise. Nested OUs allow granular GPO targeting per the LSDOU model.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+          <div class="terminal-body">
+<span class="cmt"># OU structure: corp.local</span><br>
+<span class="cmt"># └── Corp</span><br>
+<span class="cmt">#     ├── Users</span><br>
+<span class="cmt">#     │   ├── IT</span><br>
+<span class="cmt">#     │   ├── HR</span><br>
+<span class="cmt">#     │   ├── Finance</span><br>
+<span class="cmt">#     │   └── Operations</span><br>
+<span class="cmt">#     ├── Computers</span><br>
+<span class="cmt">#     └── Groups</span><br><br>
+<span class="prompt">PS C:\></span> <span class="cmd">New-ADOrganizationalUnit -Name "Corp" -Path "DC=corp,DC=local"</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">New-ADOrganizationalUnit -Name "Users" -Path "OU=Corp,DC=corp,DC=local"</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">foreach ($dept in @("IT","HR","Finance","Operations")) {</span><br>
+<span class="cmd">    New-ADOrganizationalUnit -Name $dept -Path "OU=Users,OU=Corp,DC=corp,DC=local"</span><br>
+<span class="cmd">  }</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">CREATE USERS, GROUPS, AND MEMBERSHIPS</div>
+        <p>Provisioned 10 test users using the <a href="https://github.com/elazarf123/powershell-ad-m365-scripts/blob/main/New-BulkADUsers.ps1" style="color:var(--accent)">New-BulkADUsers.ps1</a> script with SampleUsers.csv. Created security groups per department and nested the IT group inside a Domain Admins mirror group for testing delegation.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+          <div class="terminal-body">
+<span class="cmt"># Bulk provision from CSV</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">.\New-BulkADUsers.ps1 -CSVPath ".\SampleUsers.csv"</span><br><br>
+<span class="out">OK    | Created: John Smith (jsmith)       -> OU=IT,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">OK    | Created: Maria Garcia (mgarcia)    -> OU=HR,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">OK    | Created: David Johnson (djohnson)  -> OU=Finance,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">...</span><br><br>
+<span class="out">--- Provisioning Summary ---</span><br>
+<span class="out">  Created : 10</span><br>
+<span class="out">  Skipped : 0</span><br>
+<span class="out">  Failed  : 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 04</div>
+        <div class="step-title">DESIGN AND DEPLOY GROUP POLICY OBJECTS</div>
+        <p>Created 5 GPOs targeting different levels of the OU hierarchy. Practiced LSDOU precedence by deliberately setting conflicting policies at different levels and using <code style="color:var(--accent2)">gpresult /r</code> to verify which policy won.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+          <div class="terminal-body">
+<span class="cmt"># GPO 1: Password Policy (Domain level)</span><br>
+<span class="cmt"># GPO 2: Disable USB Storage (Corp OU)</span><br>
+<span class="cmt"># GPO 3: Software Restriction - block .exe from Downloads (IT OU)</span><br>
+<span class="cmt"># GPO 4: Desktop Wallpaper enforcement (Users OU)</span><br>
+<span class="cmt"># GPO 5: Audit Policy — logon events (Domain level)</span><br><br>
+<span class="prompt">PS C:\></span> <span class="cmd">New-GPO -Name "Corp-PasswordPolicy" | New-GPLink -Target "DC=corp,DC=local"</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Set-GPRegistryValue -Name "Corp-PasswordPolicy" `</span><br>
+<span class="cmd">  -Key "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" `</span><br>
+<span class="cmd">  -ValueName "MaximumPasswordAge" -Type DWord -Value 90</span><br><br>
+<span class="cmt"># Verify on client</span><br>
+<span class="prompt">C:\></span> <span class="cmd">gpresult /r</span><br>
+<span class="out">Applied Group Policy Objects</span><br>
+<span class="out">    Corp-PasswordPolicy</span><br>
+<span class="out">    Corp-DisableUSB</span><br>
+<span class="out">    Corp-DesktopWallpaper</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">STEP 05</div>
+        <div class="step-title">JOIN CLIENT MACHINES TO THE DOMAIN</div>
+        <p>Pointed both Windows 10 clients to DC01 for DNS (required for domain join). Joined via GUI and PowerShell. Verified domain membership, checked that users could log in with domain credentials, and confirmed GPOs applied correctly.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — CLIENT01</span></div>
+          <div class="terminal-body">
+<span class="cmt"># Set DNS to DC01</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 192.168.10.1</span><br><br>
+<span class="cmt"># Join domain</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">Add-Computer -DomainName "corp.local" -Credential (Get-Credential) -Restart</span><br><br>
+<span class="cmt"># Verify after reboot</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">(Get-WmiObject Win32_ComputerSystem).PartOfDomain</span><br>
+<span class="out">True</span><br>
+<span class="prompt">PS C:\></span> <span class="cmd">(Get-WmiObject Win32_ComputerSystem).Domain</span><br>
+<span class="out">corp.local</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// OUTCOME</div>
+    <div class="section-title">RESULTS</div>
+    <div class="outcome">
+      <ul>
+        <li>Fully functional <strong style="color:var(--text-bright)">corp.local</strong> domain with 1 DC and 2 joined Windows 10 clients</li>
+        <li>Multi-OU forest: 4 department OUs under Users, plus Computers and Groups containers</li>
+        <li>10 domain users provisioned via bulk CSV script, placed in correct OUs</li>
+        <li>5 GPOs deployed — password policy, USB restriction, software restriction, wallpaper, audit logging</li>
+        <li>Verified LSDOU precedence by testing conflicting policies at different OU levels</li>
+        <li>All GPO application confirmed via <code style="color:var(--accent2)">gpresult /r</code> on both clients</li>
+        <li>DNS resolving correctly — clients locate DC via SRV records</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// RELATED LABS</div>
+    <div class="section-title">BUILT ON TOP OF THIS ENVIRONMENT</div>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="lab-002.html" style="color:var(--accent); font-family:var(--mono); font-size:0.75rem; border:1px solid var(--border); padding:0.5rem 1rem; text-decoration:none; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">LAB 002 → LDAPS &amp; PKI</a>
+      <a href="lab-003.html" style="color:var(--accent); font-family:var(--mono); font-size:0.75rem; border:1px solid var(--border); padding:0.5rem 1rem; text-decoration:none; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">LAB 003 → PowerShell Automation</a>
+      <a href="lab-006.html" style="color:var(--accent); font-family:var(--mono); font-size:0.75rem; border:1px solid var(--border); padding:0.5rem 1rem; text-decoration:none; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">LAB 006 → AD Replication &amp; Health</a>
+    </div>
+  </div>
+
+  <a href="../index.html#labs" class="back-btn">← BACK TO ALL LABS</a>
+</div>
+
+</body>
+</html>

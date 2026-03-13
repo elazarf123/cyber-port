@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 004 — M365 Developer Tenant E5 Sandbox | EF_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mony&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050a0e;--bg2:#080f14;--panel:#0a1520;--panel2:#0d1c2a;--accent:#00d4ff;--accent2:#00ff88;--accent3:#ff3366;--text:#c8e8f0;--text-dim:#4a7a8a;--text-bright:#e8f8ff;--border:#1a3a4a;--mono:'Share Tech Mono',monospace;--head:'Orbitron',monospace;--body:'Rajdhani',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.015) 2px,rgba(0,212,255,0.015) 4px);pointer-events:none;z-index:9999}
+  nav{position:fixed;top:0;width:100%;background:rgba(5,10,14,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;padding:0 2rem}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-family:var(--head);font-size:0.85rem;color:var(--accent);letter-spacing:0.2em;text-decoration:none}
+  .nav-back{font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s}
+  .nav-back:hover{color:var(--accent)}
+  .lab-hero{padding:120px 2rem 60px;max-width:1100px;margin:0 auto}
+  .lab-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem}
+  .lab-title{font-family:var(--head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:1.5rem}
+  .lab-subtitle{font-size:1.1rem;color:var(--text-dim);max-width:700px;margin-bottom:2rem}
+  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem}
+  .tag{font-family:var(--mono);font-size:0.6rem;color:var(--accent2);border:1px solid rgba(0,255,136,0.3);padding:0.3rem 0.6rem;letter-spacing:0.1em}
+  .divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+  .content{max-width:1100px;margin:0 auto;padding:0 2rem 80px}
+  .section{margin-bottom:3rem}
+  .section-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.75rem}
+  .section-title{font-family:var(--head);font-size:1.1rem;color:var(--text-bright);margin-bottom:1.25rem;letter-spacing:0.05em}
+  p{color:var(--text);margin-bottom:1rem;font-size:1rem}
+  .terminal{background:#020810;border:1px solid var(--border);margin:1rem 0;overflow:hidden}
+  .terminal-bar{background:#0a1520;border-bottom:1px solid var(--border);padding:0.5rem 1rem;display:flex;align-items:center;gap:0.5rem}
+  .t-dot{width:10px;height:10px;border-radius:50%}.t-red{background:#ff3366}.t-yellow{background:#ffcc00}.t-green{background:#00ff88}
+  .t-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);margin-left:0.5rem;letter-spacing:0.1em}
+  .terminal-body{padding:1.25rem 1.5rem;font-family:var(--mono);font-size:0.78rem;line-height:1.8}
+  .cmd{color:var(--accent2)}.cmt{color:var(--text-dim)}.out{color:var(--text)}.prompt{color:var(--accent)}.warn{color:#ffcc00}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+  .info-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem}
+  .info-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:0.4rem}
+  .info-value{font-family:var(--head);font-size:0.85rem;color:var(--accent)}
+  .step{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.75rem;margin-bottom:1.5rem}
+  .step-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+  .step-num{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.2em;white-space:nowrap}
+  .step-title{font-family:var(--head);font-size:0.95rem;color:var(--text-bright);letter-spacing:0.05em}
+  .outcome{background:var(--panel2);border:1px solid rgba(0,255,136,0.2);border-left:3px solid var(--accent2);padding:1.5rem}
+  .outcome ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+  .outcome li::before{content:'▸ ';color:var(--accent2)}.outcome li{font-size:0.95rem}
+  .related-labs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1.5rem}
+  .related-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem;text-decoration:none;display:block;transition:border-color 0.2s}
+  .related-card:hover{border-color:var(--accent)}
+  .related-num{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.4rem}
+  .related-title{font-family:var(--head);font-size:0.8rem;color:var(--accent);letter-spacing:0.05em}
+  .back-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;border:1px solid var(--border);padding:0.6rem 1.2rem;letter-spacing:0.1em;transition:all 0.2s;margin-top:1rem}
+  .back-btn:hover{color:var(--accent);border-color:var(--accent)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">EF_SYS</a>
+    <a href="../index.html#labs" class="nav-back">← BACK TO LABS</a>
+  </div>
+</nav>
+
+<div class="lab-hero">
+  <div class="lab-label">// LAB 004 — CLOUD IDENTITY</div>
+  <h1 class="lab-title">M365 Developer Tenant<br>E5 Sandbox</h1>
+  <p class="lab-subtitle">Activated a 25-seat Microsoft 365 E5 developer tenant and configured enterprise-grade identity security: Conditional Access policies, MFA enforcement, email authentication records, and self-service password reset.</p>
+  <div class="tag-row">
+    <span class="tag">M365 E5</span>
+    <span class="tag">Entra ID</span>
+    <span class="tag">Conditional Access</span>
+    <span class="tag">MFA</span>
+    <span class="tag">Exchange Online</span>
+    <span class="tag">SPF / DKIM / DMARC</span>
+    <span class="tag">SSPR</span>
+    <span class="tag">PowerShell</span>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-label">PLATFORM</div>
+      <div class="info-value">Microsoft 365 E5</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">TENANT SEATS</div>
+      <div class="info-value">25 Dev Licenses</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">FOCUS AREA</div>
+      <div class="info-value">Cloud Identity Security</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">KEY SERVICES</div>
+      <div class="info-value">Entra ID / EXO / Defender</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">// OBJECTIVE</div>
+    <div class="section-title">WHAT THIS LAB DEMONSTRATES</div>
+    <p>Microsoft 365 E5 provides the full security stack used by enterprise organizations. This lab simulates real IT admin work: standing up a tenant, enforcing identity-based access controls, hardening email infrastructure, and validating configurations via PowerShell and the admin portal. These are direct MS-900 and SC-900 exam skills applied in a live environment.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEP 1 -->
+  <div class="section">
+    <div class="section-label">// STEP 01</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 01 //</span>
+        <span class="step-title">ACTIVATE M365 E5 DEVELOPER TENANT</span>
+      </div>
+      <p>Registered for the Microsoft 365 Developer Program at developer.microsoft.com/microsoft-365/dev-program. Selected the E5 sandbox option, which provisions a 25-user tenant with all premium licenses including Entra ID P2, Defender for Office 365 Plan 2, and Purview compliance tools.</p>
+      <p>Verified tenant provisioning via the Microsoft 365 Admin Center and confirmed all 25 E5 licenses were active and assignable. Set up the Global Admin account and documented the tenant domain (<code style="font-family:var(--mono);font-size:0.8rem;color:var(--accent2)">devtenant.onmicrosoft.com</code>).</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">PowerShell — Connect-MgGraph</span></div>
+        <div class="terminal-body">
+<span class="prompt">PS></span> <span class="cmd">Connect-MgGraph -Scopes "User.Read.All","Organization.Read.All"</span><br>
+<span class="out">Welcome To Microsoft Graph!</span><br>
+<br>
+<span class="prompt">PS></span> <span class="cmd">Get-MgSubscribedSku | Select SkuPartNumber,ConsumedUnits,PrepaidUnits</span><br>
+<br>
+<span class="out">SkuPartNumber               ConsumedUnits  PrepaidUnits</span><br>
+<span class="out">-------------               -------------  ------------</span><br>
+<span class="out">DEVELOPERPACK_E5                        3  @{Enabled=25}</span><br>
+<span class="out">AAD_PREMIUM_P2                          3  @{Enabled=25}</span><br>
+<span class="out">FLOW_FREE                               0  @{Enabled=10000}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section">
+    <div class="section-label">// STEP 02</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 02 //</span>
+        <span class="step-title">CONFIGURE CONDITIONAL ACCESS POLICIES</span>
+      </div>
+      <p>Navigated to Entra ID → Security → Conditional Access. Built policies to enforce MFA for all users, block legacy authentication protocols (IMAP, POP3, SMTP AUTH), and restrict sign-ins from high-risk locations using named locations.</p>
+      <p>Created three policies: <strong style="color:var(--text-bright)">Require MFA — All Users</strong>, <strong style="color:var(--text-bright)">Block Legacy Auth</strong>, and <strong style="color:var(--text-bright)">High-Risk Sign-In Block</strong>. Placed all test accounts in a dedicated CA exclusion group to preserve admin access during testing.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">PowerShell — Conditional Access via Graph</span></div>
+        <div class="terminal-body">
+<span class="prompt">PS></span> <span class="cmd">Connect-MgGraph -Scopes "Policy.ReadWrite.ConditionalAccess"</span><br>
+<br>
+<span class="prompt">PS></span> <span class="cmd">Get-MgIdentityConditionalAccessPolicy | Select DisplayName, State</span><br>
+<br>
+<span class="out">DisplayName                       State</span><br>
+<span class="out">-----------                       -----</span><br>
+<span class="out">Require MFA - All Users           enabled</span><br>
+<span class="out">Block Legacy Auth                 enabled</span><br>
+<span class="out">High-Risk Sign-In Block           enabledForReportingButNotEnforced</span><br>
+<br>
+<span class="cmt"># Verified policy targeting via sign-in logs — legacy auth attempts blocked</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section">
+    <div class="section-label">// STEP 03</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 03 //</span>
+        <span class="step-title">CONFIGURE SPF, DKIM & DMARC EMAIL AUTHENTICATION</span>
+      </div>
+      <p>Configured email authentication records in the DNS zone for the custom domain. SPF record was set to authorize Microsoft 365 mail servers only. Enabled DKIM signing in the Exchange Online Admin Center and rotated DKIM keys. Published DMARC TXT record with a quarantine policy and reporting URIs.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">DNS Records — Email Authentication</span></div>
+        <div class="terminal-body">
+<span class="cmt"># SPF Record</span><br>
+<span class="out">v=spf1 include:spf.protection.outlook.com -all</span><br>
+<br>
+<span class="cmt"># DKIM CNAME Records (created in Exchange Admin Center)</span><br>
+<span class="out">selector1._domainkey  →  selector1-devtenant._domainkey.onmicrosoft.com</span><br>
+<span class="out">selector2._domainkey  →  selector2-devtenant._domainkey.onmicrosoft.com</span><br>
+<br>
+<span class="cmt"># DMARC TXT Record</span><br>
+<span class="out">v=DMARC1; p=quarantine; pct=100;</span><br>
+<span class="out">rua=mailto:dmarc-reports@devtenant.onmicrosoft.com;</span><br>
+<span class="out">ruf=mailto:dmarc-forensics@devtenant.onmicrosoft.com; fo=1</span><br>
+<br>
+<span class="prompt">PS></span> <span class="cmd">Get-DkimSigningConfig -Identity devtenant.onmicrosoft.com | Select Enabled,Status</span><br>
+<span class="out">Enabled : True   Status : Valid</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="section">
+    <div class="section-label">// STEP 04</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 04 //</span>
+        <span class="step-title">CONFIGURE EXCHANGE ONLINE MAIL FLOW & MESSAGE TRACE</span>
+      </div>
+      <p>Created mail flow rules in the Exchange Admin Center to tag external emails with a warning banner and to block outbound emails with attachments over 25 MB. Used Message Trace to follow a test email end-to-end from submission through delivery, verifying DKIM signature and spam filtering decisions.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">PowerShell — Exchange Online Mail Flow</span></div>
+        <div class="terminal-body">
+<span class="prompt">PS></span> <span class="cmd">Connect-ExchangeOnline</span><br>
+<span class="out">Connected to Exchange Online.</span><br>
+<br>
+<span class="prompt">PS></span> <span class="cmd">Get-TransportRule | Select Name, State, Priority</span><br>
+<br>
+<span class="out">Name                              State    Priority</span><br>
+<span class="out">----                              -----    --------</span><br>
+<span class="out">External Email Warning Banner     Enabled         0</span><br>
+<span class="out">Block Large Attachments           Enabled         1</span><br>
+<br>
+<span class="prompt">PS></span> <span class="cmd">Get-MessageTrace -SenderAddress "test@devtenant.onmicrosoft.com" -StartDate (Get-Date).AddHours(-1) | Select Received, Status, FromIP</span><br>
+<br>
+<span class="out">Received              Status     FromIP</span><br>
+<span class="out">--------              ------     ------</span><br>
+<span class="out">3/10/2026 2:31:44 PM  Delivered  40.107.94.58</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="section">
+    <div class="section-label">// STEP 05</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 05 //</span>
+        <span class="step-title">ENABLE SSPR & GROUP-BASED LICENSE ASSIGNMENT</span>
+      </div>
+      <p>Enabled Self-Service Password Reset (SSPR) in Entra ID for a pilot group, requiring two authentication methods (email + phone). Configured the SSPR registration campaign and verified password writeback to an on-prem AD lab via Azure AD Connect (pass-through auth simulation).</p>
+      <p>Created dynamic security groups based on department attributes and tested group-based license assignment for E5 and F3 license types. Verified license inheritance and propagation delay via the Entra ID portal and PowerShell.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">PowerShell — SSPR and License Verification</span></div>
+        <div class="terminal-body">
+<span class="cmt"># Verify SSPR is enabled for pilot group</span><br>
+<span class="prompt">PS></span> <span class="cmd">Get-MgPolicyAuthenticationMethodPolicy | Select AdditionalProperties</span><br>
+<br>
+<span class="cmt"># Check group-based license errors</span><br>
+<span class="prompt">PS></span> <span class="cmd">Get-MgGroupMemberWithLicenseError -GroupId "a1b2c3d4-..." | Select DisplayName, LicenseAssignmentStates</span><br>
+<span class="out">No license errors found.</span><br>
+<br>
+<span class="cmt"># Confirm dynamic group membership rule</span><br>
+<span class="prompt">PS></span> <span class="cmd">Get-MgGroup -GroupId "a1b2c3d4-..." | Select DisplayName, MembershipRule</span><br>
+<span class="out">DisplayName: IT Department Pilot</span><br>
+<span class="out">MembershipRule: (user.department -eq "Information Technology")</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- OUTCOME -->
+  <div class="section">
+    <div class="section-label">// OUTCOME</div>
+    <div class="section-title">WHAT WAS ACHIEVED</div>
+    <div class="outcome">
+      <ul>
+        <li>Activated and fully configured a 25-seat M365 E5 developer tenant from scratch</li>
+        <li>Enforced MFA across all users via Conditional Access; blocked all legacy authentication protocols</li>
+        <li>Published SPF, DKIM, and DMARC records; validated DKIM signing active in Exchange Online</li>
+        <li>Built mail flow rules and traced end-to-end email delivery through Message Trace</li>
+        <li>Deployed SSPR with two auth methods; configured group-based license assignment with zero errors</li>
+        <li>Managed tenant entirely via both the admin portal and Microsoft Graph PowerShell module</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RELATED LABS -->
+  <div class="section">
+    <div class="section-label">// RELATED LABS</div>
+    <div class="section-title">EXPLORE MORE</div>
+    <div class="related-labs">
+      <a href="lab-001.html" class="related-card">
+        <div class="related-num">LAB // 001</div>
+        <div class="related-title">3-VM Active Directory Domain Lab</div>
+      </a>
+      <a href="lab-003.html" class="related-card">
+        <div class="related-num">LAB // 003</div>
+        <div class="related-title">PowerShell AD Automation Suite</div>
+      </a>
+      <a href="lab-005.html" class="related-card">
+        <div class="related-num">LAB // 005</div>
+        <div class="related-title">DNS/DHCP Infrastructure Setup</div>
+      </a>
+    </div>
+  </div>
+
+  <a href="../index.html#labs" class="back-btn">← RETURN TO LAB INDEX</a>
+</div>
+</body>
+</html>

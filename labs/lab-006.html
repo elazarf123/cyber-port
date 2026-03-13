@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 006 — AD Replication & Health Monitoring | EF_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050a0e;--bg2:#080f14;--panel:#0a1520;--panel2:#0d1c2a;--accent:#00d4ff;--accent2:#00ff88;--accent3:#ff3366;--text:#c8e8f0;--text-dim:#4a7a8a;--text-bright:#e8f8ff;--border:#1a3a4a;--mono:'Share Tech Mono',monospace;--head:'Orbitron',monospace;--body:'Rajdhani',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.015) 2px,rgba(0,212,255,0.015) 4px);pointer-events:none;z-index:9999}
+  nav{position:fixed;top:0;width:100%;background:rgba(5,10,14,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;padding:0 2rem}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-family:var(--head);font-size:0.85rem;color:var(--accent);letter-spacing:0.2em;text-decoration:none}
+  .nav-back{font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s}
+  .nav-back:hover{color:var(--accent)}
+  .lab-hero{padding:120px 2rem 60px;max-width:1100px;margin:0 auto}
+  .lab-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem}
+  .lab-title{font-family:var(--head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:1.5rem}
+  .lab-subtitle{font-size:1.1rem;color:var(--text-dim);max-width:700px;margin-bottom:2rem}
+  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem}
+  .tag{font-family:var(--mono);font-size:0.6rem;color:var(--accent2);border:1px solid rgba(0,255,136,0.3);padding:0.3rem 0.6rem;letter-spacing:0.1em}
+  .divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+  .content{max-width:1100px;margin:0 auto;padding:0 2rem 80px}
+  .section{margin-bottom:3rem}
+  .section-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);le4ter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.75rem}
+  .section-title{font-family:var(--head);font-size:1.1rem;color:var(--text-bright);margin-bottom:1.25rem;letter-spacing:0.05em}
+  p{color:var(--text);margin-bottom:1rem;font-size:1rem}
+  .terminal{background:#020810;border:1px solid var(--border);margin:1rem 0;overflow:hidden}
+  .terminal-bar{background:#0a1520;border-bottom:1px solid var(--border);padding:0.5rem 1rem;display:flex;align-items:center;gap:0.5rem}
+  .t-dot{width:10px;height:10px;border-radius:50%}.t-red{background:#ff3366}.t-yellow{background:#ffcc00}.t-green{background:#00ff88}
+  .t-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);margin-left:0.5rem;letter-spacing:0.1em}
+  .terminal-body{padding:1.25rem 1.5rem;font-family:var(--mono);font-size:0.78rem;line-height:1.8}
+  .cmd{color:var(--accent2)}.cmt{color:var(--text-dim)}.out{color:var(--text)}.prompt{color:var(--accent)}.warn{color:#ffcc00}.err{color:var(--accent3)}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+  .info-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem}
+  .info-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:0.4rem}
+  .info-value{font-family:var(--head);font-size:0.85rem;color:var(--accent)}
+  .step{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.75rem;margin-bottom:1.5rem}
+  .step-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+  .step-num{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.2em;white-space:nowrap}
+  .step-title{font-family:var(--head);font-size:0.95rem;color:var(--text-bright);letter-spacing:0.05em}
+  .aar-box{background:var(--panel2);border:1px solid rgba(255,51,102,0.25);border-left:3px solid var(--accent3);padding:1.5rem;margin-top:1rem}
+  .aar-title{font-family:var(--head);font-size:0.8rem;color:var(--accent3);letter-spacing:0.1em;margin-bottom:1rem}
+  .aar-row{display:grid;grid-template-columns:140px 1fr;gap:0.5rem 1rem;margin-bottom:0.5rem;font-size:0.9rem}
+  .aar-key{font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:0.1em;padding-top:0.1rem}
+  .aar-val{color:var(--text)}
+  .outcome{background:var(--panel2);border:1px solid rgba(0,255,136,0.2);border-left:3px solid var(--accent2);padding:1.5rem}
+  .outcome ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+  .outcome li::before{content:'▸ ';color:var(--accent2)}.outcome li{font-size:0.95rem}
+  .related-labs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1.5rem}
+  .related-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem;text-decoration:none;display:block;transition:border-color 0.2s}
+  .related-card:hover{border-color:var(--accent)}
+  .related-num{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.4rem}
+  .related-title{font-family:var(--head);font-size:0.8rem;color:var(--accent);letter-spacing:0.05em}
+  .back-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;border:1px solid var(--border);padding:0.6rem 1.2rem;letter-spacing:0.1em;transition:all 0.2s;margin-top:1rem}
+  .back-btn:hover{color:var(--accent);border-color:var(--accent)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">EF_SYS</a>
+    <a href="../index.html#labs" class="nav-back">← BACK TO LABS</a>
+  </div>
+</nav>
+
+<div class="lab-hero">
+  <div class="lab-label">// LAB 006 — REPLICATION & MONITORING</div>
+  <h1 class="lab-title">AD Replication &amp;<br>Health Monitoring</h1>
+  <p class="lab-subtitle">Used repadmin and dcdiag to monitor Active Directory replication health, intentionally broke replication between DCs, diagnosed the failure, restored service, and documented findings in a formal After-Action Report.</p>
+  <div class="tag-row">
+    <span class="tag">repadmin</span>
+    <span class="tag">dcdiag</span>
+    <span class="tag">AD Replication</span>
+    <span class="tag">Event Viewer</span>
+    <span class="tag">ITIL AAR</span>
+    <span class="tag">Windows Server 2019</span>
+    <span class="tag">Sites & Services</span>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-label">ENVIRONMENT</div>
+      <div class="info-value">2-DC VirtualBox Lab</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">DCs</div>
+      <div class="info-value">DC01 + DC02</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">DOMAIN</div>
+      <div class="info-value">corp.local</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">PROCESS</div>
+      <div class="info-value">ITIL Incident + AAR</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">// OBJECTIVE</div>
+    <div class="section-title">WHAT THIS LAB DEMONSTRATES</div>
+    <p>AD replication failures silently corrupt the directory — user password changes don't propagate, GPO updates stall, and object creation conflicts arise. This lab builds hands-on familiarity with every tool a Tier 2 sysadmin uses to monitor and recover replication: baseline health checks with <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">dcdiag</code> and <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">repadmin</code>, break/fix scenarios, Event Log analysis, and documented incident closure using an After-Action Report (ITIL format).</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEP 1 -->
+  <div class="section">
+    <div class="section-label">// STEP 01</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 01 //</span>
+        <span class="step-title">BASELINE HEALTH CHECK WITH DCDIAG</span>
+      </div>
+      <p>Ran a full <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">dcdiag /v</code> on both domain controllers to establish a healthy baseline. Documented all passing tests. Key tests reviewed: Advertising, KccEvent, KnowsOfRoleHolders, MachineAccount, NCSecDesc, NetLogons, ObjectsReplicated, Replications, RidManager, SystemLog.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">CMD — dcdiag baseline</span></div>
+        <div class="terminal-body">
+<span class="prompt">C:\></span> <span class="cmd">dcdiag /v /test:Replications /test:Advertising /test:KccEvent</span><br>
+<br>
+<span class="out">Directory Server Diagnosis</span><br>
+<span class="out">Performing initial setup:</span><br>
+<span class="out">   Trying to find home server...</span><br>
+<span class="out">   Home Server = DC01</span><br>
+<span class="out">   * Identified AD Forest.</span><br>
+<br>
+<span class="out">   Starting test: Replications</span><br>
+<span class="out">      * Replications Check</span><br>
+<span class="out">      ......................... DC01 passed test Replications</span><br>
+<span class="out">   Starting test: Advertising</span><br>
+<span class="out">      ......................... DC01 passed test Advertising</span><br>
+<span class="out">   Starting test: KccEvent</span><br>
+<span class="out">      ......................... DC01 passed test KccEvent</span><br>
+<br>
+<span class="cmt">REM Baseline: all tests PASSED on both DC01 and DC02</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section">
+    <div class="section-label">// STEP 02</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 02 //</span>
+        <span class="step-title">MONITOR REPLICATION WITH REPADMIN</span>
+      </div>
+      <p>Used <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">repadmin /showrepl</code> to view per-partition replication status and <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">repadmin /replsummary</code> for a high-level pass/fail view across all DCs. Forced manual replication with <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">repadmin /syncall</code> and verified changes propagated within seconds.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">CMD — repadmin monitoring</span></div>
+        <div class="terminal-body">
+<span class="prompt">C:\></span> <span class="cmd">repadmin /replsummary</span><br>
+<br>
+<span class="out">Replication Summary Start Time: 2026-03-10 14:22:01</span><br>
+<br>
+<span class="out">Beginning data collection for replication summary, this may take awhile:</span><br>
+<span class="out">  .........................</span><br>
+<span class="out">Source DSA          largest delta    fails/total %%   error</span><br>
+<span class="out">DC01                00h:03m:12s          0 /   3   0%</span><br>
+<span class="out">DC02                00h:03m:08s          0 /   3   0%</span><br>
+<br>
+<span class="prompt">C:\></span> <span class="cmd">repadmin /syncall /AdeP</span><br>
+<span class="out">Syncing all NC's held on DC01.</span><br>
+<span class="out">Syncing partition: DC=corp,DC=local</span><br>
+<span class="out">CALLBACK MESSAGE: The following replication completed successfully:</span><br>
+<span class="out">          From: DC02  To: DC01  NC: DC=corp,DC=local</span><br>
+<span class="out">SyncAll Finished Successfully.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section">
+    <div class="section-label">// STEP 03</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 03 //</span>
+        <span class="step-title">BREAK/FIX — SIMULATE REPLICATION FAILURE</span>
+      </div>
+      <p>Intentionally broke replication between DC01 and DC02 by blocking RPC port 135 traffic via Windows Firewall on DC02. Observed the failure surface in <code style="font-family:var(--mono);color:var(--accent2);font-size:0.8rem">repadmin /showrepl</code> and in Event Viewer (Event IDs 1311, 1864). Confirmed the failure, then restored connectivity by removing the firewall rule.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">CMD — Failure injection and detection</span></div>
+        <div class="terminal-body">
+<span class="cmt">REM -- On DC02: block RPC endpoint mapper port to simulate network failure</span><br>
+<span class="prompt">C:\></span> <span class="cmd">netsh advfirewall firewall add rule name="BREAK-RPC" protocol=TCP dir=in localport=135 action=block</span><br>
+<span class="out">Ok.</span><br>
+<br>
+<span class="cmt">REM -- On DC01: force sync attempt — should now fail</span><br>
+<span class="prompt">C:\></span> <span class="cmd">repadmin /syncall /AdeP</span><br>
+<span class="err">CALLBACK MESSAGE: The following replication FAILED:</span><br>
+<span class="err">    From: DC02  To: DC01</span><br>
+<span class="err">    Naming Context: DC=corp,DC=local</span><br>
+<span class="err">    LDAP Error 58 (0x3a): The specified server cannot perform the requested operation.</span><br>
+<br>
+<span class="prompt">C:\></span> <span class="cmd">repadmin /showrepl DC01</span><br>
+<span class="err">          Last attempt @ 2026-03-10 15:17:32 was successful.</span><br>
+<span class="err">          Last attempt @ 2026-03-10 15:44:01 FAILED, result 1722 (0x6ba):</span><br>
+<span class="err">             The RPC server is unavailable.</span><br>
+<br>
+<span class="cmt">REM -- Fix: remove blocking rule on DC02</span><br>
+<span class="prompt">C:\></span> <span class="cmd">netsh advfirewall firewall delete rule name="BREAK-RPC"</span><br>
+<span class="out">Deleted 1 rule(s).</span><br>
+<br>
+<span class="prompt">C:\></span> <span class="cmd">repadmin /syncall /AdeP</span><br>
+<span class="out">SyncAll Finished Successfully.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="section">
+    <div class="section-label">// STEP 04</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 04 //</span>
+        <span class="step-title">EVENT VIEWER ANALYSIS — AD REPLICATION EVENTS</span>
+      </div>
+      <p>Reviewed the Directory Service event log in Event Viewer during and after the failure. Documented the key Event IDs that surface during replication failures and understood what each indicates. Confirmed all errors cleared after the firewall rule was removed and replication recovered.</p>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">PowerShell — Event Log Query</span></div>
+        <div class="terminal-body">
+<span class="prompt">PS></span> <span class="cmd">Get-EventLog -LogName "Directory Service" -EntryType Error,Warning -Newest 10 | Select TimeWritten,EventID,Message</span><br>
+<br>
+<span class="out">TimeWritten          EventID   Message</span><br>
+<span class="out">-----------          -------   -------</span><br>
+<span class="err">3/10/2026 3:44:01 PM    1311   The Knowledge Consistency Checker (KCC) has detected that successive attempts to replicate...</span><br>
+<span class="err">3/10/2026 3:44:01 PM    1864   This is the replication status for the naming context DC=corp,DC=local from the source DC...</span><br>
+<span class="warn">3/10/2026 3:44:01 PM    1925   The attempt to establish a replication link for the following writable directory partition failed.</span><br>
+<br>
+<span class="cmt"># After fix — clean health check</span><br>
+<span class="prompt">PS></span> <span class="cmd">Get-EventLog -LogName "Directory Service" -EntryType Error -Newest 5</span><br>
+<span class="out">No events found matching the specified criteria.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="section">
+    <div class="section-label">// STEP 05</div>
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">STEP 05 //</span>
+        <span class="step-title">AFTER-ACTION REPORT (ITIL FORMAT)</span>
+      </div>
+      <p>Documented the incident end-to-end in a structured After-Action Report following ITIL incident management principles. The AAR captures timeline, root cause analysis, impact, and corrective actions — the same format used in enterprise environments to close incidents and prevent recurrence.</p>
+      <div class="aar-box">
+        <div class="aar-title">// INCIDENT REPORT — AAR-2026-001</div>
+        <div class="aar-row"><span class="aar-key">INCIDENT TITLE</span><span class="aar-val">AD Replication Failure Between DC01 and DC02</span></div>
+        <div class="aar-row"><span class="aar-key">DATE / TIME</span><span class="aar-val">2026-03-10 15:44 UTC — resolved 16:02 UTC (18 min outage)</span></div>
+        <div class="aar-row"><span class="aar-key">SEVERITY</span><span class="aar-val">P2 — High (replication failure, no auth outage due to single site)</span></div>
+        <div class="aar-row"><span class="aar-key">DETECTED BY</span><span class="aar-val">repadmin /replsummary scheduled task alert — error 1722 (RPC unavailable)</span></div>
+        <div class="aar-row"><span class="aar-key">ROOT CAUSE</span><span class="aar-val">Windows Firewall rule on DC02 blocked inbound TCP 135 (RPC Endpoint Mapper), preventing DC01 from establishing a replication connection</span></div>
+        <div class="aar-row"><span class="aar-key">IMPACT</span><span class="aar-val">AD object changes on DC01 were not propagating to DC02 for 18 minutes. No user-facing authentication failures due to single Active Directory site</span></div>
+        <div class="aar-row"><span class="aar-key">REMEDIATION</span><span class="aar-val">Removed blocking firewall rule on DC02. Forced replication via repadmin /syncall /AdeP. Verified clean replication with replsummary and dcdiag</span></div>
+        <div class="aar-row"><span class="aar-key">CORRECTIVE ACTION</span><span class="aar-val">Added firewall audit GPO to all DCs. Created monitoring script to alert on repadmin failures > 0 in daily replsummary. Documented RPC port requirements in internal runbook</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- OUTCOME -->
+  <div class="section">
+    <div class="section-label">// OUTCOME</div>
+    <div class="section-title">WHAT WAS ACHIEVED</div>
+    <div class="outcome">
+      <ul>
+        <li>Established baseline AD health using dcdiag across all test categories on a 2-DC lab</li>
+        <li>Monitored replication topology and forced manual sync using repadmin /showrepl, /replsummary, /syncall</li>
+        <li>Intentio.ally introduced and confirmed a replication failure (RPC error 1722) via firewall block</li>
+        <li>Diagnosed root cause using Event IDs 1311, 1864, 1925 in the Directory Service log</li>
+        <li>Restored full replication and verified clean health with no errors in Event Viewer</li>
+        <li>Produced a complete ITIL-format After-Action Report covering timeline, root cause, and corrective actions</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RELATED LABS -->
+  <div class="section">
+    <div class="section-label">// RELATED LABS</div>
+    <div class="section-title">EXPLORE MORE</div>
+    <div class="related-labs">
+      <a href="lab-001.html" class="related-card">
+        <div class="related-num">LAB // 001</div>
+        <div class="related-title">3-VM Active Directory Domain Lab</div>
+      </a>
+      <a href="lab-002.html" class="related-card">
+        <div class="related-num">LAB // 002</div>
+        <div class="related-title">LDAPS &amp; PKI Certificate Lab</div>
+      </a>
+      <a href="lab-005.html" class="related-card">
+        <div class="related-num">LAB // 005</div>
+        <div class="related-title">DNS/DHCP Infrastructure Setup</div>
+      </a>
+    </div>
+  </div>
+
+  <a href="../index.html#labs" class="back-btn">← RETURN TO LAB INDEX</a>
+</div>
+</body>
+</html>

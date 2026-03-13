@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 003 — PowerShell AD Automation Suite | EF_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050a0e;--bg2:#080f14;--panel:#0a1520;--panel2:#0d1c2a;--accent:#00d4ff;--accent2:#00ff88;--accent3:#ff3366;--text:#c8e8f0;--text-dim:#4a7a8a;--text-bright:#e8f8ff;--border:#1a3a4a;--mono:'Share Tech Mono',monospace;--head:'Orbitron',monospace;--body:'Rajdhani',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.015) 2px,rgba(0,212,255,0.015) 4px);pointer-events:none;z-index:9999}
+  nav{position:fixed;top:0;width:100%;background:rgba(5,10,14,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;padding:0 2rem}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-family:var(--head);font-size:0.85rem;color:var(--accent);letter-spacing:0.2em;text-decoration:none}
+  .nav-back{font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s}
+  .nav-back:hover{color:var(--accent)}
+  .lab-hero{padding:120px 2rem 60px;max-width:1100px;margin:0 auto}
+  .lab-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem}
+  .lab-title{font-family:var(--head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:1.5rem}
+  .lab-subtitle{font-size:1.1rem;color:var(--text-dim);max-width:700px;margin-bottom:2rem}
+  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem}
+  .tag{font-family:var(--mono);font-size:0.6rem;color:var(--accent2);border:1px solid rgba(0,255,136,0.3);padding:0.3rem 0.6rem;letter-spacing:0.1em}
+  .divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+  .content{max-width:1100px;margin:0 auto;padding:0 2rem 80px}
+  .section{margin-bottom:3rem}
+  .section-label{font-family:var(--mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.75rem}
+  .section-title{font-family:var(--head);font-size:1.1rem;color:var(--text-bright);margin-bottom:1.25rem;letter-spacing:0.05em}
+  p{color:var(--text);margin-bottom:1rem;font-size:1rem}
+  .script-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2rem}
+  .script-card{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--accent);padding:1.5rem}
+  .script-name{font-family:var(--mono);font-size:0.8rem;color:var(--accent2);margin-bottom:0.5rem}
+  .script-desc{font-size:0.9rem;color:var(--text);margin-bottom:1rem}
+  .script-link{font-family:var(--mono);font-size:0.65rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:0.4rem 0.8rem;display:inline-block;transition:border-color 0.2s}
+  .script-link:hover{border-color:var(--accent)}
+  .terminal{background:#020810;border:1px solid var(--border);margin:1rem 0;overflow:hidden}
+  .terminal-bar{background:#0a1520;border-bottom:1px solid var(--border);padding:0.5rem 1rem;display:flex;align-items:center;gap:0.5rem}
+  .t-dot{width:10px;height:10px;border-radius:50%}.t-red{background:#ff3366}.t-yellow{background:#ffcc00}.t-green{background:#00ff88}
+  .t-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);margin-left:0.5rem;letter-spacing:0.1em}
+  .terminal-body{padding:1.25rem 1.5rem;font-family:var(--mono);font-size:0.78rem;line-height:1.8}
+  .cmd{color:var(--accent2)}.cmt{color:var(--text-dim)}.out{color:var(--text)}.prompt{color:var(--accent)}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+  .info-card{background:var(--panel);border:1px solid var(--border);padding:1.25rem}
+  .info-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:0.4rem}
+  .info-value{font-family:var(--head);font-size:0.85rem;color:var(--accent)}
+  .outcome{background:var(--panel2);border:1px solid rgba(0,255,136,0.2);border-left:3px solid var(--accent2);padding:1.5rem}
+  .outcome ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+  .outcome li::before{content:'▸ ';color:var(--accent2)}.outcome li{font-size:0.95rem}
+  .back-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-decoration:none;border:1px solid var(--border);padding:0.6rem 1.2rem;letter-spacing:0.1em;transition:all 0.2s;margin-top:1rem}
+  .back-btn:hover{color:var(--accent);border-color:var(--accent)}
+  .gh-banner{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent2);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+  .gh-text{font-family:var(--mono);font-size:0.75rem;color:var(--text-dim)}
+  .gh-link{font-family:var(--mono);font-size:0.7rem;color:var(--accent2);text-decoration:none;border:1px solid rgba(0,255,136,0.3);padding:0.4rem 0.8rem;transition:all 0.2s}
+  .gh-link:hover{border-color:var(--accent2);color:var(--text-bright)}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="../index.html" class="nav-logo">EF_<span style="color:var(--accent2)">SYS</span></a><a href="../index.html#labs" class="nav-back">← BACK TO PORTFOLIO</a></div></nav>
+
+<div class="lab-hero">
+  <div class="lab-label">// LAB 003 — HANDS_ON_LABS</div>
+  <h1 class="lab-title">PowerShell AD<br>Automation Suite</h1>
+  <p class="lab-subtitle">Wrote three production-grade PowerShell scripts to automate the most time-consuming Active Directory admin tasks — bulk user provisioning, stale account detection, and group membership auditing — all with error handling and CSV export.</p>
+  <div class="tag-row">
+    <span class="tag">PowerShell</span><span class="tag">New-BulkADUsers.ps1</span><span class="tag">Get-ADStaleUsers.ps1</span>
+    <span class="tag">Get-ADGroupAudit.ps1</span><span class="tag">CSV Export</span><span class="tag">Error Handling</span><span class="tag">Automation</span>
+  </div>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">SCRIPTS</div><div class="info-value">3 Production Scripts</div></div>
+    <div class="info-card"><div class="info-label">LANGUAGE</div><div class="info-value">PowerShell 5.1+</div></div>
+    <div class="info-card"><div class="info-label">MODULE</div><div class="info-value">ActiveDirectory (RSAT)</div></div>
+    <div class="info-card"><div class="info-label">REPO</div><div class="info-value">Public on GitHub</div></div>
+  </div>
+</div>
+
+<div class="content">
+  <hr class="divider">
+
+  <div class="gh-banner">
+    <span class="gh-text">// All scripts are live and publicly available on GitHub</span>
+    <a href="https://github.com/elazarf123/powershell-ad-m365-scripts" target="_blank" class="gh-link">VIEW REPO ON GITHUB →</a>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// OBJECTIVE</div>
+    <div class="section-title">THE PROBLEM THESE SCRIPTS SOLVE</div>
+    <p>Manual AD administration at scale is error-prone and slow. Onboarding 10 new users one-by-one in ADUC takes 30+ minutes and creates inconsistencies. Running stale account audits manually means someone skips it. Group membership reviews get delayed. These scripts turn all three tasks into single-command operations with logged, exportable results.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// SCRIPT 01</div>
+    <div class="section-title">NEW-BULKADUSERS.PS1 — BULK USER PROVISIONING</div>
+    <p>Reads a structured CSV, validates required columns, creates each user in the correct OU based on their department, sets a temporary password, forces a password change at next logon, and logs every result (Created / Skipped / Failed) to a timestamped CSV.</p>
+    <div class="terminal">
+      <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+      <div class="terminal-body">
+<span class="cmt"># Run against SampleUsers.csv (10 users across IT, HR, Finance, Operations)</span><br>
+<span class="prompt">PS C:\Scripts></span> <span class="cmd">.\New-BulkADUsers.ps1 -CSVPath ".\SampleUsers.csv"</span><br><br>
+<span class="out">[INFO] Loaded 10 users from .\SampleUsers.csv</span><br>
+<span class="out">OK    | Created: John Smith (jsmith)       -> OU=IT,OU=Users,aoU=Corp,DC=corp,DC=local</span><br>
+<span class="out">OK    | Created: Maria Garcia (mgarcia)    -> OU=HR,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">OK    | Created: David Johnson (djohnson)  -> OU=Finance,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">SKIP  | jsmith already exists in AD.</span><br>
+<span class="out">OK    | Created: Sarah Williams (swilliams) -> OU=IT,OU=Users,OU=Corp,DC=corp,DC=local</span><br>
+<span class="out">...</span><br><br>
+<span class="out">--- Provisioning Summary ---</span><br>
+<span class="out">  Created : 9</span><br>
+<span class="out">  Skipped : 1</span><br>
+<span class="out">  Failed  : 0</span><br>
+<span class="out">  Log     : .\BulkADUsers_Log_20260312_143022.csv</span>
+      </div>
+    </div>
+    <a href="https://github.com/elazarf123/powershell-ad-m365-scripts/blob/main/New-BulkADUsers.ps1" target="_blank" class="script-link">VIEW FULL SCRIPT ON GITHUB →</a>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// SCRIPT 02</div>
+    <div class="section-title">GET-ADSTAEUSERS.PS1 — INACTIVE ACCOUNT DETECTION</div>
+    <p>Queries AD for enabled accounts with no logon activity within a configurable threshold (default: 90 days). Exports a CSV with username, department, last logon date, days inactive, and manager. Supports an optional -DisableAccounts flag (always run with -WhatIf first).</p>
+    <div class="terminal">
+      <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+      <div class="terminal-body">
+<span class="cmt"># Find all accounts inactive for 90+ days</span><br>
+<span class="prompt">PS C:\Scripts></span> <span class="cmd">.\Get-ADStaleUsers.ps1</span><br><br>
+<span class="out">[INFO] Searching for accounts inactive since: 12/03/2025</span><br>
+<span class="out">[INFO] Found 4 stale accounts.</span><br><br>
+<span class="out">Username      LastLogon       DaysInactive  Department    Manager</span><br>
+<span class="out">--------      ---------       ------------  ----------    -------</span><br>
+<span class="out">bthompson     09/15/2025      178 days      Finance       djohnson</span><br>
+<span class="out">rsmith        10/02/2025      161 days      HR            mgarcia</span><br>
+<span class="out">testadmin     Never           365+ days     IT            administrator</span><br>
+<span class="out">svc_legacy    11/01/2025      131 days      Operations    administrator</span><br><br>
+<span class="out">Report saved: .\StaleUsers_20260312.csv</span><br><br>
+<span class="cmt"># Preview what would be disabled (WhatIf mode — no changes made)</span><br>
+<span class="prompt">PS C:\Scripts></span> <span class="cmd">.\Get-ADStaleUsers.ps1 -DaysInactive 60 -DisableAccounts -WhatIf</span><br>
+<span class="out">What if: Performing the operation "Disable-ADAccount" on target "bthompson".</span><br>
+<span class="out">What if: Performing the operation "Disable-ADAccount" on target "rsmith".</span>
+      </div>
+    </div>
+    <a href="https://github.com/elazarf123/powershell-ad-m365-scripts/blob/main/Get-ADStaleUsers.ps1" target="_blank" class="script-link">VIEW FULL SCRIPT ON GITHUB →</a>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// SCRIPT 03</div>
+    <div class="section-title">GET-ADGROUPAUDIT.PS1 — GROUP MEMBERSHIP AUDIT</div>
+    <p>Enumerates AD groups, uses Get-ADGroupMember to pull all members, then enriches each user record with enabled status, department, and last logon date. Supports recursive resolution for nested groups. Exports a full CSV for quarterly access reviews.</p>
+    <div class="terminal">
+      <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-label">powershell — DC01</span></div>
+      <div class="terminal-body">
+<span class="cmt"># Audit all groups — includes nested member resolution</span><br>
+<span class="prompt">PS C:\Scripts></span> <span class="cmd">.\Get-ADGroupAudit.ps1 -IncludeNestedMembers</span><br><br>
+<span class="out">[INFO] Querying AD groups (filter: '*') under: DC=corp,DC=local</span><br>
+<span class="out">[INFO] Found 12 group(s) to audit.</span><br><br>
+<span class="out">  [OK] Domain Admins — 2 member(s)</span><br>
+<span class="out">  [OK] IT-Staff — 4 member(s)</span><br>
+<span class="out">  [OK] HR-Staff — 3 member(s)</span><br>
+<span class="out">  [EMPTY] Test-Group</span><br>
+<span class="out">  [OK] VPN-Users — 7 member(s)</span><br>
+<span class="out">...</span><br><br>
+<span class="out">--- Audit Summary ---</span><br>
+<span class="out">  Groups audited : 12</span><br>
+<span class="out">  Total members  : 31</span><br>
+<span class="out">  Report saved   : .\ADGroupAudit_20260312_143508.csv</span><br><br>
+<span class="cmt"># Target just privileged groups for a quick Domain Admin audit</span><br>
+<span class="prompt">PS C:\Scripts></span> <span class="cmd">.\Get-ADGroupAudit.ps1 -GroupFilter "Domain*" -IncludeNestedMembers</span>
+      </div>
+    </div>
+    <a href="https://github.com/elazarf123/powershell-ad-m365-scripts/blob/main/Get-ADGroupAudit.ps1" target="_blank" class="script-link">VIEW FULL SCRIPT ON GITHUB →</a>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// OUTCOME</div>
+    <div class="section-title">RESULTS</div>
+    <div class="outcome">
+      <ul>
+        <li>3 production-grade, well-commented scripts covering the most common AD automation tasks</li>
+        <li>All scripts support <strong style="color:var(--text-bright)">-WhatIf</strong> for safe previewing before any changes are made</li>
+        <li>Full error handling — individual failures don't halt the script; every result is logged</li>
+        <li>CSV output on all three scripts — compatible with ServiceNow, Jira, and compliance reporting tools</li>
+        <li>All scripts publicly available on GitHub with full README documentation</li>
+        <li>Directly mirrors scripts used in enterprise onboarding and HIPAA access review workflows</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">// RELATED</div>
+    <div class="section-title">USED IN THESE LABS</div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="lab-001.html" style="color:var(--accent);font-family:var(--mono);font-size:0.75rem;border:1px solid var(--border);padding:0.5rem 1rem;text-decoration:none" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">← LAB 001: AD Domain Lab</a>
+      <a href="lab-006.html" style="color:var(--accent);font-family:var(--mono);font-size:0.75rem;border:1px solid var(--border);padding:0.5rem 1rem;text-decoration:none" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">LAB 006 → AD Health Monitoring</a>
+    </div>
+  </div>
+  <a href="../index.html#labs" class="back-btn">← BACK TO ALL LABS</a>
+</div>
+</body>
+</html>

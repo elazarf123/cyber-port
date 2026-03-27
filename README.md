@@ -1,32 +1,36 @@
-Freelancer Jekyll theme  
-=========================
+# Elazar Ferrer — IT Systems & Identity Administrator Portfolio
 
-Jekyll theme based on [Freelancer bootstrap theme ](http://startbootstrap.com/template-overviews/freelancer/)
+Personal cybersecurity and IT portfolio built with Jekyll and hosted on GitHub Pages.
 
-## How to use
- - Place a image in `/img/portfolio/`
- - Replace `your-email@domain.com` in `_config.yml` with your email address. Refer to [formspree](http://formspree.io/) for more information.
- - Create posts to display your projects. Use the follow as an example:
-```txt
----
-layout: default
-modal-id: 1
-date: 2020-01-18
-img: cabin.png
-alt: image-alt
-project-date: January 2020
-client: The Client
-category: Web Development
-description: The description of the project
+🔗 **Live site:** [elazarf123.github.io/cyber-port](https://elazarf123.github.io/cyber-port/)
 
 ---
+
+## About
+
+This portfolio showcases hands-on labs, project write-ups, and professional documents focused on:
+
+- **Active Directory & Identity** — AD DS, GPO, OU design, PKI/LDAPS
+- **Microsoft 365 & Azure** — Entra ID, Exchange Online, Intune, PowerShell automation
+- **Security** — NIST CSF/SP 800-30, security audits, vulnerability assessments, incident response
+- **Systems Administration** — Windows Server 2019, DNS/DHCP, VirtualBox lab environments
+
+## Structure
+
+| Path | Description |
+|---|---|
+| `_posts/` | Project write-ups (front-matter driven) |
+| `labs/` | Detailed hands-on lab walkthroughs |
+| `index.html` | Main portfolio page |
+| `resume.html` | Resume download page |
+| `Elazar_Ferrer_IT_Resume.pdf` | Current resume |
+
+## Running Locally
+
+```bash
+bundle install
+bundle exec jekyll serve
 ```
 
-## Demo
-View this jekyll theme in action [here](https://jeromelachaud.com/freelancer-theme)
+Then open [http://localhost:4000](http://localhost:4000).
 
-## Screenshot
-![screenshot](https://raw.githubusercontent.com/jeromelachaud/freelancer-theme/master/screenshot.png)
-
----------
-For more details, read the [documentation](http://jekyllrb.com/)

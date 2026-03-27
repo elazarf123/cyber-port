@@ -1,6 +1,413 @@
-<div style="width:100%; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#f5f5f5;">
-    <h1>My Resume</h1>
-    <p style="margin:20px 0;">Download my IT Resume:</p>
-    <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" style="padding:15px 30px; background:#007bff; color:white; text-decoration:none; border-radius:5px; font-size:18px; font-weight:bold;">📥 Download Resume</a>
-    <p style="margin-top:20px; font-size:14px; color:#666;">Click to view or download your resume</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Elazar Ferrer | IT Systems & Identity Administrator</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050a0e'/><text y='.9em' font-size='80' x='10'>🔐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0e;
+    --bg2: #080f14;
+    --panel: #0a1520;
+    --panel2: #0d1c2a;
+    --accent: #00d4ff;
+    --accent2: #00ff88;
+    --accent3: #ff3366;
+    --text: #c8e8f0;
+    --text-dim: #4a7a8a;
+    --text-bright: #e8f8ff;
+    --border: #1a3a4a;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Orbitron', monospace;
+    --body: 'Rajdhani', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.015) 2px, rgba(0,212,255,0.015) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    background: rgba(5,10,14,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 0 2rem;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--head);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent2); }
+  .nav-back {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--accent); }
+
+  /* HERO */
+  .resume-hero {
+    padding: 100px 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent2);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .hero-name {
+    font-family: var(--head);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--text-bright);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-title {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title::before { content: "> "; color: var(--accent2); }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+  .meta-row a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .meta-row a:hover { color: var(--accent); }
+  .action-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-dl {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    padding: 0.75rem 1.75rem;
+    background: var(--accent2);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-dl:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-view {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    text-decoration: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-view:hover { background: rgba(0,212,255,0.1); transform: translateY(-2px); }
+
+  /* CERT COLUMN */
+  .cert-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .cert-col-header {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.25rem;
+  }
+
+  /* CERT BADGES */
+  .cert-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .cert-item {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--accent2);
+    border: 1px solid rgba(0,255,136,0.3);
+    padding: 0.3rem 0.75rem;
+    letter-spacing: 0.1em;
+    background: rgba(0,255,136,0.05);
+  }
+  .cert-item.progress {
+    color: var(--accent);
+    border-color: rgba(0,212,255,0.3);
+    background: rgba(0,212,255,0.05);
+  }
+
+  /* PDF VIEWER */
+  .viewer-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+  .viewer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    padding: 0.75rem 1.25rem;
+  }
+  .viewer-dots { display: flex; gap: 0.4rem; align-items: center; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: var(--accent3); }
+  .dot.y { background: #ffcc00; }
+  .dot.g { background: var(--accent2); }
+  .viewer-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+  }
+  .viewer-actions { display: flex; gap: 0.5rem; }
+  .viewer-btn {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.65rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .viewer-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .pdf-frame-wrap {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    height: 85vh;
+    min-height: 600px;
+  }
+  .pdf-frame-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+  /* Fallback shown when iframe can't load */
+  .pdf-fallback {
+    display: none;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 3rem;
+  }
+  .pdf-fallback-icon { font-size: 3rem; }
+  .pdf-fallback p { color: var(--text-dim); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; }
+
+  /* DIVIDER */
+  .section-divider {
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* FOOTER BACK LINK */
+  .footer-back {
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+  .footer-back:hover { color: var(--accent); }
+
+
+    .resume-hero { padding-top: 90px; flex-direction: column; }
+    .viewer-wrap { padding: 0 1rem 3rem; }
+    .pdf-frame-wrap { height: 70vh; }
+    .meta-row { gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">EF<span>_</span>SYS</a>
+    <a href="index.html" class="nav-back">← BACK TO PORTFOLIO</a>
+  </div>
+</nav>
+
+<div class="resume-hero">
+  <div>
+    <div class="hero-label">// curriculum vitae</div>
+    <h1 class="hero-name">ELAZAR<br><span>FERRER</span></h1>
+    <div class="hero-title">IT Systems &amp; Identity Administrator</div>
+    <div class="meta-row">
+      <span>📍 Lubbock, TX</span>
+      <a href="mailto:ferrerelazar@gmail.com">✉ ferrerelazar@gmail.com</a>
+      <a href="https://www.linkedin.com/in/elazarf/" target="_blank">in linkedin.com/in/elazarf</a>
+      <a href="https://github.com/elazarf123" target="_blank">⌥ github.com/elazarf123</a>
+    </div>
+    <div class="action-row">
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" download class="btn-dl">⬇ DOWNLOAD PDF</a>
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" class="btn-view">↗ OPEN IN NEW TAB</a>
+    </div>
+  </div>
+  <div class="cert-column">
+    <div class="cert-col-header">// CERTIFICATIONS</div>
+    <div class="cert-strip">
+      <span class="cert-item">● COMPTIA SECURITY+ — 03/2026</span>
+      <span class="cert-item">● GOOGLE CYBERSECURITY — 12/2025</span>
+      <span class="cert-item">● GOOGLE HEALTHCARE IT — 02/2026</span>
+      <span class="cert-item progress">◈ AZ-900 — IN PROGRESS</span>
+      <span class="cert-item progress">◈ SC-300 — IN PROGRESS</span>
+    </div>
+  </div>
 </div>
+
+<div class="viewer-wrap">
+  <div class="viewer-header">
+    <div class="viewer-dots">
+      <div class="dot r"></div>
+      <div class="dot y"></div>
+      <div class="dot g"></div>
+    </div>
+    <div class="viewer-label">Elazar_Ferrer_Resume_IT.pdf</div>
+    <div class="viewer-actions">
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" download class="viewer-btn">⬇ DOWNLOAD</a>
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" class="viewer-btn">↗ OPEN</a>
+    </div>
+  </div>
+  <div class="pdf-frame-wrap" id="pdfWrap">
+    <iframe
+      src="Elazar_Ferrer_Resume%20IT.pdf"
+      title="Elazar Ferrer IT Resume"
+      id="pdfFrame"
+    ></iframe>
+    <div class="pdf-fallback" id="pdfFallback">
+      <div class="pdf-fallback-icon">📄</div>
+      <p>PDF PREVIEW UNAVAILABLE IN THIS BROWSER</p>
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" download class="btn-dl">⬇ DOWNLOAD RESUME</a>
+      <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" class="btn-view">↗ OPEN IN NEW TAB</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>ELAZAR FERRER // IT SYSTEMS &amp; IDENTITY ADMINISTRATOR // LUBBOCK TX</div>
+  <div style="margin-top:0.5rem;color:var(--border);">© 2026 — <a href="index.html" class="footer-back">← BACK TO PORTFOLIO</a></div>
+</footer>
+
+<script>
+  // Show fallback if the PDF iframe fails to load (e.g., mobile browsers)
+  const frame = document.getElementById('pdfFrame');
+  frame.addEventListener('error', function() {
+    frame.style.display = 'none';
+    const fb = document.getElementById('pdfFallback');
+    fb.style.display = 'flex';
+  });
+  // Some browsers won't fire an error event for PDFs — poll after a generous
+  // delay (3 s) to catch cases where the iframe loads but renders an empty
+  // document (common on iOS Safari and some Android browsers).
+  const PDF_LOAD_CHECK_DELAY_MS = 3000;
+  setTimeout(function() {
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc || doc.readyState === 'loading') return;
+      // If the document body is empty the browser could not render the PDF
+      if (doc.body && doc.body.innerHTML === '') {
+        frame.style.display = 'none';
+        document.getElementById('pdfFallback').style.display = 'flex';
+      }
+    } catch(e) { /* cross-origin iframe: ignore */ }
+  }, PDF_LOAD_CHECK_DELAY_MS);
+</script>
+
+</body>
+</html>

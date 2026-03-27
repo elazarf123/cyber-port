@@ -7,7 +7,7 @@
 
 <!-- Open Graph / Social Preview -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Elazar Ferrer | IT Syshtems & Identity Administrator">
+<meta property="og:title" content="Elazar Ferrer | IT Systems & Identity Administrator">
 <meta property="og:description" content="Active Directory & M365 specialist with 3+ years enterprise IT experience. Azure, Entra ID, and Windows Server administration. Available for IT roles in Lubbock, TX.">
 <meta property="og:url" content="https://elazarf123.github.io/cyber-port/">
 <meta name="twitter:card" content="summary">
@@ -15,8 +15,6 @@
 <meta name="twitter:description" content="AD & M365 specialist with Azure, Entra ID, and Active Directory admin experience in Lubbock, TX.">
 
 <!-- Favicon -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050a0e'/><text y='.9em' font-size='80' x='10'>🔐</text></svg>">
-
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050a0e'/><text y='.9em' font-size='80' x='10'>🔐</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -530,6 +528,7 @@
       <li><a href="#labs">labs</a></li>
       <li><a href="#progress">progress</a></li>
       <li><a href="#contact">contact</a></li>
+      <li><a href="resume.html">resume</a></li>
     </ul>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -544,6 +543,7 @@
   <a href="#labs" onclick="closeMenu()">// labs</a>
   <a href="#progress" onclick="closeMenu()">// progress</a>
   <a href="#contact" onclick="closeMenu()">// contact</a>
+  <a href="resume.html">// resume</a>
 </div>
 
 <!-- HERO -->
@@ -557,7 +557,7 @@
         IT professional with 3+ years in enterprise identity management, Active Directory administration, and Microsoft 365 environments. Building expertise in Azure cloud administration, Entra ID, and enterprise IT operations.
       </p>
       <div class="hero-ctas">
-                <a href="Elazar_Ferrer_IT_Resume.pdf" target="_blank" class="btn-green">⬇ DOWNLOAD CV</a>
+                <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" class="btn-green" download>⬇ DOWNLOAD RESUME</a>
         <a href="#labs" class="btn-secondary">VIEW LABS</a>
       </div>
       <div class="hero-contact" style="display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap;">
@@ -837,7 +837,7 @@
       </div>
       <div class="progress-item">
         <div class="progress-label"><span>SC-300 IDENTITY & ACCESS</span><span style="color:var(--accent)">5%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="40%" style="width:0%"></div></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" data-width="5%" style="width:0%"></div></div>
       </div>
       <div class="progress-item">
         <div class="progress-label"><span>AZ-900 AZURE FUNDAMENTALS</span><span style="color:var(--accent)">30%</span></div>
@@ -909,8 +909,8 @@
       <p>Open to enterprise AD/M365 administrator roles, open to corporate, healthcare, education, and financial sector IT environments. Hands-on lab experience and a strong foundation in identity management, M365, Azure, and Entra ID.</p>
       <p>Based in <strong style="color:var(--accent)">Lubbock, TX</strong> — available for remote or hybrid positions.</p>
       <div class="contact-links">
-        <a href="/cdn-cgi/l/email-protection#36505344445344535a574c574476515b575f5a1855595b" class="contact-link">
-          <span class="contact-link-icon">✉</span><span><span class="__cf_email__" data-cfemail="a4c2c1d6d6c1d6c1c8c5dec5d6e4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></span>
+        <a href="mailto:ferrerelazar@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span><span>ferrerelazar@gmail.com</span>
         </a>
         <a href="https://www.linkedin.com/in/elazarf/" class="contact-link" target="_blank">
           <span class="contact-link-icon">in</span><span>linkedin.com/in/elazarf</span>
@@ -953,7 +953,7 @@
   <div style="margin-top:0.5rem; color:var(--border);">© 2026 — Built for enterprise AD & M365 roles</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+<script>
 function viewResumePDF() {
   var b64 = document.getElementById("resumeData").value;
   var byteChars = atob(b64);

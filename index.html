@@ -10,9 +10,11 @@
 <meta property="og:title" content="Elazar Ferrer | IT Systems & Identity Administrator">
 <meta property="og:description" content="Active Directory & M365 specialist with 3+ years enterprise IT experience. Azure, Entra ID, and Windows Server administration. Available for IT roles in Lubbock, TX.">
 <meta property="og:url" content="https://elazarf123.github.io/cyber-port/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://elazarf123.github.io/cyber-port/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Elazar Ferrer | AD & M365 Administrator">
 <meta name="twitter:description" content="AD & M365 specialist with Azure, Entra ID, and Active Directory admin experience in Lubbock, TX.">
+<meta name="twitter:image" content="https://elazarf123.github.io/cyber-port/og-image.svg">
 
 <!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050a0e'/><text y='.9em' font-size='80' x='10'>🔐</text></svg>">
@@ -466,6 +468,12 @@
   .progress-bar-wrap { height: 4px; background: rgba(255,255,255,0.05); position: relative; overflow: hidden; }
   .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); position: relative; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
   .progress-bar::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 20px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4)); animation: shimmer 2s infinite; }
+  .cert-badges { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+  .credential-card { background: var(--panel); border: 1px solid rgba(0,255,136,0.25); border-top: 2px solid var(--accent2); padding: 1.25rem 1.5rem; flex: 1; min-width: 200px; }
+  .credential-name { font-family: var(--head); font-size: 0.8rem; color: var(--text-bright); letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+  .credential-issuer { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+  .credential-earned { font-family: var(--mono); font-size: 0.6rem; color: var(--accent2); letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.4rem; }
+  .credential-earned::before { content: '✓'; }
 
   /* CONTACT */
   #contact { border-top: 1px solid var(--border); }
@@ -554,7 +562,7 @@
       <h1 class="hero-name">ELAZAR<br><span class="accent">FERRER</span></h1>
       <div class="hero-title">Active Directory & M365 Specialist</div>
       <p class="hero-desc">
-        IT professional with 3+ years in enterprise identity management, Active Directory administration, and Microsoft 365 environments. Building expertise in Azure cloud administration, Entra ID, and enterprise IT operations.
+        3+ years in enterprise IT across healthcare (HIPAA) and telecom — Active Directory lifecycle management, M365 tenant administration, Group Policy, PowerShell automation, and PKI. CompTIA Security+ certified March 2026. Available for AD/M365 administrator and cloud identity roles.
       </p>
       <div class="hero-ctas">
                 <a href="Elazar_Ferrer_Resume%20IT.pdf" target="_blank" class="btn-green" download>⬇ DOWNLOAD RESUME</a>
@@ -818,9 +826,30 @@
 <!-- PROGRESS -->
 <section id="progress">
   <div class="section-header">
-    <div class="section-tag">// 05 — study_progress</div>
-    <h2 class="section-title">TRAINING STATUS</h2>
+    <div class="section-tag">// 05 — credentials</div>
+    <h2 class="section-title">CREDENTIALS</h2>
   </div>
+
+  <!-- Earned cert badges -->
+  <div class="cert-badges">
+    <div class="credential-card">
+      <div class="credential-name">CompTIA Security+</div>
+      <div class="credential-issuer">CompTIA</div>
+      <div class="credential-earned">CERTIFIED — March 2026</div>
+    </div>
+    <div class="credential-card">
+      <div class="credential-name">Google Cybersecurity Certificate</div>
+      <div class="credential-issuer">Google / Coursera</div>
+      <div class="credential-earned">CERTIFIED</div>
+    </div>
+    <div class="credential-card">
+      <div class="credential-name">Google IT Support (Healthcare)</div>
+      <div class="credential-issuer">Google / Coursera</div>
+      <div class="credential-earned">CERTIFIED</div>
+    </div>
+  </div>
+
+  <!-- In-progress training -->
   <div class="progress-grid">
     <div class="progress-card">
       <div class="progress-card-title">▸ CERTIFICATIONS</div>
@@ -833,16 +862,12 @@
         <div class="progress-bar-wrap"><div class="progress-bar" data-width="30%" style="width:0%"></div></div>
       </div>
       <div class="progress-item">
-        <div class="progress-label"><span>GOOGLE CYBERSECURITY CERT</span><span style="color:var(--accent2)">100%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="100%" style="width:0%"></div></div>
-      </div>
-      <div class="progress-item">
-        <div class="progress-label"><span>GOOGLE HEALTHCARE IT</span><span style="color:var(--accent2)">100%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="100%" style="width:0%"></div></div>
+        <div class="progress-label"><span>SC-300 IDENTITY &amp; ACCESS ADMIN</span><span style="color:var(--accent)">5%</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" data-width="5%" style="width:0%"></div></div>
       </div>
     </div>
     <div class="progress-card">
-      <div class="progress-card-title">▸ TRYHACKME ROOMS</div>
+      <div class="progress-card-title">▸ TRYHACKME — COMPLETED ROOMS</div>
       <div class="progress-item">
         <div class="progress-label"><span>WINDOWS FUNDAMENTALS 1–3</span><span style="color:var(--accent2)">100%</span></div>
         <div class="progress-bar-wrap"><div class="progress-bar" data-width="100%" style="width:0%"></div></div>
@@ -850,18 +875,6 @@
       <div class="progress-item">
         <div class="progress-label"><span>ACTIVE DIRECTORY BASICS</span><span style="color:var(--accent2)">100%</span></div>
         <div class="progress-bar-wrap"><div class="progress-bar" data-width="100%" style="width:0%"></div></div>
-      </div>
-      <div class="progress-item">
-        <div class="progress-label"><span>HACKING WITH POWERSHELL</span><span style="color:var(--accent)">45%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="45%" style="width:0%"></div></div>
-      </div>
-      <div class="progress-item">
-        <div class="progress-label"><span>DNS IN DETAIL</span><span style="color:var(--accent)">50%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="50%" style="width:0%"></div></div>
-      </div>
-      <div class="progress-item">
-        <div class="progress-label"><span>JR PENETRATION TESTER PATH</span><span style="color:var(--accent)">25%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" data-width="25%" style="width:0%"></div></div>
       </div>
     </div>
   </div>

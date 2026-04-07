@@ -1,7 +1,8 @@
 # Site settings
 title: Elazar Ferrer
 email: ferrerelazar@gmail.com
-url: https://elazarf123.github.io/cyber-port
+url: https://elazarf123.github.io
+baseurl: /cyber-port
 description: "Portfolio of cybersecurity work samples for a junior-level cyber security professional."
 keywords: "cybersecurity, cyber, security, portfolio, tech"
 skills: "Cybersecurity Analyst | Splunk | Incident Response"

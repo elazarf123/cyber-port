@@ -3,7 +3,7 @@ title: Elazar Ferrer
 email: ferrerelazar@gmail.com
 url: https://elazarf123.github.io
 baseurl: /cyber-port
-description: "Portfolio of cybersecurity work samples for a junior-level cyber security professional."
+description: "IT Systems & Identity Administrator portfolio — Active Directory, M365, Azure, PowerShell automation, and hands-on lab walkthroughs."
 keywords: "cybersecurity, cyber, security, portfolio, tech"
 skills: "Cybersecurity Analyst | Splunk | Incident Response"
 meta_author: Ferrer Elazar
@@ -54,8 +54,8 @@ location:
   - line: Lubbock, Texas
 
 # Credits content
-credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.
-Cyber icons created by <a href="https://www.flaticon.com/free-icons/cyber-attack" title="cyber attack icons">Freepik - Flaticon</a>.'
+credits: 'Built on the <a href="http://startbootstrap.com">Start Bootstrap Freelancer</a> Jekyll theme (MIT).
+Cyber icons by <a href="https://www.flaticon.com/free-icons/cyber-attack" title="cyber attack icons">Freepik - Flaticon</a>.'
 
 # Build settings
 markdown: kramdown

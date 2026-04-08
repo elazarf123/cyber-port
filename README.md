@@ -19,11 +19,14 @@ This portfolio showcases hands-on labs, project write-ups, and professional docu
 
 | Path | Description |
 |---|---|
-| `_posts/` | Project write-ups (front-matter driven) |
+| `_data/projects.yml` | **Single source of truth** — lab/project entries |
+| `_data/skills.yml` | **Single source of truth** — technical skill categories |
+| `_data/certs.yml` | **Single source of truth** — earned and in-progress certs |
+| `_posts/` | Case study and project write-ups (front-matter driven) |
 | `labs/` | Detailed hands-on lab walkthroughs |
 | `index.html` | Main portfolio page |
 | `resume.html` | Resume download page |
-| `Elazar_Ferrer_IT_Resume.pdf` | Current resume |
+| `Elazar_Ferrer_Resume IT.pdf` | Current resume |
 
 ## Running Locally
 
@@ -67,6 +70,9 @@ Detailed lab write-ups live in `labs/`. Add a new Markdown (`.md`) file there an
 ### Site metadata
 `_config.yml` holds the site title, description, social links, and color palette — update those values to change site-wide settings without touching individual pages.
 
+### Content data files
+`_data/projects.yml`, `_data/skills.yml`, and `_data/certs.yml` are the **single source of truth** for portfolio content. When Jekyll is used to build the site these files drive the templates; they also serve as structured, version-controlled documentation of current content.
+
 ## Deployment (GitHub Pages)
 
 The repo contains a `.nojekyll` file so GitHub Pages serves the pre-built static files directly — **no build step is required**.
@@ -74,6 +80,8 @@ The repo contains a `.nojekyll` file so GitHub Pages serves the pre-built static
 To deploy:
 1. Push to the `master` branch (or whichever branch is set as the Pages source in the repo Settings → Pages).
 2. GitHub Pages automatically picks up the changes and publishes to `https://elazarf123.github.io/cyber-port/` within a minute or two.
+
+A GitHub Actions workflow (`.github/workflows/build.yml`) runs `bundle exec jekyll build` on every push and pull request to validate the Jekyll build still passes.
 
 If you ever remove `.nojekyll` and want GitHub Pages to run Jekyll itself, make sure `_config.yml` has:
 

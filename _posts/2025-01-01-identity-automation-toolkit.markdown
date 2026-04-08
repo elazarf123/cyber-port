@@ -23,7 +23,7 @@ tags:
 
 ### Problem
 
-Manual Active Directory and M365 administration tasks — bulk user provisioning, stale-account detection, licence reconciliation, and group-membership audits — are time-consuming and error-prone when run ad hoc from the GUI.
+Manual Active Directory and M365 administration tasks — bulk user provisioning, stale-account detection, license reconciliation, and group-membership audits — are time-consuming and error-prone when run ad hoc from the GUI.
 
 At scale (500+ users across a multi-site AD environment), a single misconfigured account or missed deprovision can create compliance gaps under HIPAA or general change-management policy.
 

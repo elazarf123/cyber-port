@@ -15,6 +15,35 @@ This portfolio showcases hands-on labs, project write-ups, and professional docu
 - **Security** — NIST CSF/SP 800-30, security audits, vulnerability assessments, incident response
 - **Systems Administration** — Windows Server 2019, DNS/DHCP, VirtualBox lab environments
 
+## What I Changed — Customization Notes
+
+This repository is a **customized fork** of the [Start Bootstrap Freelancer](https://github.com/jeromelachaud/freelancer-theme) Jekyll theme (MIT license). The upstream theme provided a basic one-page portfolio scaffold; everything content-related and the majority of the structure was rebuilt or replaced.
+
+### Original upstream theme
+- Source: <https://github.com/jeromelachaud/freelancer-theme>
+- License: MIT (see `LICENCE`)
+
+### What is mine / what was customized
+
+| Area | What changed |
+|---|---|
+| **Content & data** | All content in `_data/projects.yml`, `_data/skills.yml`, and `_data/certs.yml` — projects, skills, and certifications are my own |
+| **Posts** | Every write-up in `_posts/` is an original case study or lab report written by me |
+| **Lab walkthroughs** | All files under `labs/` are original hands-on lab write-ups |
+| **`index.html`** | Fully redesigned single-page layout (cyberpunk/terminal aesthetic, custom CSS, hero section, skills grid, labs section, contact section) |
+| **`resume.html`** | New page — interactive PDF viewer with inline iframe, fallback for mobile, and download button |
+| **`style.css`** | New CSS file — custom color palette, typography, layout, and responsive design |
+| **`_config.yml`** | Site title, description, social links, color palette, and baseurl set to my domain |
+| **`_layouts/`** | Updated default layout and associated styles |
+| **`og-image.svg`** | Custom Open Graph / social preview image |
+| **`.github/workflows/build.yml`** | Added GitHub Actions workflow to validate the Jekyll build on every push/PR |
+
+### What was kept from the theme
+- Overall Jekyll project scaffold (`Gemfile`, `Rakefile`, `_includes/`, bootstrap CSS)
+- MIT license file
+
+---
+
 ## Structure
 
 | Path | Description |
@@ -26,7 +55,7 @@ This portfolio showcases hands-on labs, project write-ups, and professional docu
 | `labs/` | Detailed hands-on lab walkthroughs |
 | `index.html` | Main portfolio page |
 | `resume.html` | Resume download page |
-| `Elazar_Ferrer_Resume IT.pdf` | Current resume |
+| `assets/docs/Elazar_Ferrer_Resume_IT.pdf` | Current resume PDF |
 
 ## Running Locally
 

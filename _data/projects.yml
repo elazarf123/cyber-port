@@ -1,0 +1,94 @@
+# _data/projects.yml
+# Single source of truth for hands-on lab entries shown in index.html #labs.
+# Each entry maps directly to a lab card. Update here to keep the page in sync.
+
+- id: "lab-001"
+  number: "LAB // 001"
+  title: "3-VM Active Directory Domain Lab"
+  url: "labs/lab-001.html"
+  description: >
+    Built Windows Server 2019 DC + two Win10 clients in VirtualBox. Promoted domain
+    controller, configured OU hierarchy, user/group structure, and GPO policy chain.
+    Tested LSDOU ordering and verified with gpresult /r.
+  tags:
+    - "Server 2019"
+    - "Active Directory"
+    - "GPO"
+    - "VirtualBox"
+    - "gpresult"
+
+- id: "lab-002"
+  number: "LAB // 002"
+  title: "LDAPS & PKI Certificate Lab"
+  url: "labs/lab-002.html"
+  description: >
+    Installed AD Certificate Services, configured Enterprise Root CA, issued server
+    certificates, and enabled LDAPS on port 636. Verified secure bind with ldp.exe
+    and confirmed TLS encryption on AD queries.
+  tags:
+    - "AD CS"
+    - "PKI"
+    - "LDAPS"
+    - "Port 636"
+    - "ldp.exe"
+
+- id: "lab-003"
+  number: "LAB // 003"
+  title: "PowerShell AD Automation Suite"
+  url: "labs/lab-003.html"
+  description: >
+    Developed reusable scripts: bulk user creation from CSV with error handling
+    (New-BulkADUsers.ps1), inactive account detection at 90 days
+    (Get-ADStaleUsers.ps1), and recursive Domain Admin audit (Get-ADGroupAudit.ps1)
+    with CSV export. Published to GitHub.
+  tags:
+    - "PowerShell"
+    - "New-ADUser"
+    - "Automation"
+    - "GitHub"
+
+- id: "lab-004"
+  number: "LAB // 004"
+  title: "M365 Developer Tenant — E5 Sandbox"
+  url: "labs/lab-004.html"
+  description: >
+    Activated 25-seat E5 developer tenant. Configured Conditional Access policies
+    requiring MFA, set up mail flow rules, enabled SPF/DKIM/DMARC, ran Message
+    Trace, and tested SSPR and group-based license assignment.
+  tags:
+    - "M365 E5"
+    - "Conditional Access"
+    - "SPF/DKIM/DMARC"
+    - "Exchange Online"
+    - "SSPR"
+
+- id: "lab-005"
+  number: "LAB // 005"
+  title: "DNS/DHCP Infrastructure Setup"
+  url: "labs/lab-005.html"
+  description: >
+    Configured forward/reverse DNS zones with SRV records for DC location
+    (_ldap._tcp, _kerberos._tcp). Set up DHCP scopes, exclusions, and
+    reservations. Practiced nslookup/ipconfig troubleshooting workflows and
+    scavenging.
+  tags:
+    - "DNS"
+    - "DHCP"
+    - "SRV Records"
+    - "nslookup"
+    - "Kerberos"
+
+- id: "lab-006"
+  number: "LAB // 006"
+  title: "AD Replication & Health Monitoring"
+  url: "labs/lab-006.html"
+  description: >
+    Practiced repadmin /showrepl, /replsummary, and /syncall for replication
+    diagnostics. Used dcdiag for DC health checks. Intentionally broke replication,
+    documented root cause, and wrote full After-Action Report per ITIL process.
+  tags:
+    - "repadmin"
+    - "dcdiag"
+    - "Replication"
+    - "AAR"
+    - "ITIL"

@@ -1,0 +1,44 @@
+# _data/certs.yml
+# Single source of truth for certifications and in-progress training.
+# Used by the #skills and #progress sections of index.html.
+
+earned:
+  - name: "CompTIA Security+"
+    issuer: "CompTIA"
+    date: "March 2026"
+    icon: "🔐"
+    status: "active"
+
+  - name: "Google Cybersecurity Certificate"
+    issuer: "Google / Coursera"
+    date: "December 2025"
+    icon: "🔒"
+    status: "active"
+
+  - name: "Google IT Support (Healthcare)"
+    issuer: "Google / Coursera (Johns Hopkins)"
+    date: "February 2026"
+    icon: "🏥"
+    status: "active"
+
+in_progress:
+  - name: "AZ-900 Azure Fundamentals"
+    issuer: "Microsoft"
+    icon: "☁"
+    target_date: "April 2026"
+    progress_pct: 30
+
+  - name: "SC-300 Identity & Access Administrator"
+    issuer: "Microsoft"
+    icon: "🛡"
+    target_date: "TBD"
+    progress_pct: 5
+
+training:
+  - platform: "TryHackMe"
+    profile_url: "https://tryhackme.com/p/elazarferrer1"
+    completed_rooms:
+      - name: "Windows Fundamentals 1–3"
+        progress_pct: 100
+      - name: "Active Directory Basics"
+        progress_pct: 100

@@ -1,0 +1,74 @@
+# _data/skills.yml
+# Single source of truth for technical skills shown in index.html #skills.
+# Each entry is a category with a list of skill tags.
+
+- category: "Identity & Directory"
+  icon: "▸"
+  items:
+    - "Active Directory (Multi-Domain/Forest)"
+    - "Azure AD / Entra ID"
+    - "LDAP / LDAPS"
+    - "GPO Management"
+    - "FSMO Roles"
+    - "AD Replication"
+    - "Kerberos / NTLM"
+    - "AD CS / PKI"
+    - "ADUC / GPMC"
+
+- category: "Microsoft 365"
+  icon: "▸"
+  items:
+    - "Exchange Online"
+    - "Teams Admin"
+    - "SharePoint Online"
+    - "Conditional Access"
+    - "Intune / MDM"
+    - "SSPR"
+    - "Azure AD Connect"
+    - "License Management"
+
+- category: "Networking & Infrastructure"
+  icon: "▸"
+  items:
+    - "DNS / DHCP"
+    - "TCP/IP"
+    - "VPN / IPSEC"
+    - "SPF / DKIM / DMARC"
+    - "SRV Records"
+    - "Patch Management"
+    - "Vulnerability Assessment"
+
+- category: "Scripting & Automation"
+  icon: "▸"
+  items:
+    - "PowerShell"
+    - "Python"
+    - "Bash"
+    - "SQL"
+    - "New-ADUser / CSV Bulk"
+    - "Search-ADAccount"
+    - "Get-ADGroupMember"
+    - "Connect-ExchangeOnline"
+
+- category: "Security & Compliance"
+  icon: "▸"
+  items:
+    - "Zero Trust"
+    - "HIPAA / HITECH"
+    - "NIST CSF 2.0"
+    - "SIEM / Splunk"
+    - "Incident Response"
+    - "Change Management"
+    - "Root Cause Analysis"
+    - "AAR Documentation"
+
+- category: "Platforms & Tools"
+  icon: "▸"
+  items:
+    - "Windows Server 2019"
+    - "Windows 10/11"
+    - "ServiceNow / Jira"
+    - "Epic / NextGen EHR"
+    - "Cisco VOIP"
+    - "VirtualBox / VMware"
+    - "TryHackMe (Adept)"

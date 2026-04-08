@@ -6,6 +6,26 @@ Personal cybersecurity and IT portfolio built with Jekyll and hosted on GitHub P
 
 ---
 
+## About This Repo (Customized Fork)
+
+This repo started as a fork of the [Start Bootstrap Freelancer Jekyll theme](https://github.com/jeromelachaud/freelancer-theme) but has been **heavily customized** — the upstream theme provided only the visual scaffolding. Everything content-related and most structural choices are original work by the owner.
+
+### What I changed vs. the upstream theme
+
+| Area | What was customized |
+|---|---|
+| **Content & data** | All bio, skills, certifications, and project entries replaced with real IT/cybersecurity work |
+| **Color palette & branding** | Dark terminal-style theme (`#0a0f1a` background, cyan accent) replacing the original light Bootstrap look |
+| **Resume page** | Custom `resume.html` with an inline PDF viewer, fallback for mobile browsers, and download links |
+| **Project write-ups** | Six original case studies in `_posts/` covering security audits, vulnerability assessments, incident response, and identity automation |
+| **Labs section** | Hands-on lab walkthroughs in `labs/` (Active Directory, PKI/LDAPS, etc.) |
+| **Navigation & layout** | Simplified single-page layout with terminal-style UI elements; `_layouts/default.html` rebuilt |
+| **Data-driven content** | `_data/projects.yml`, `_data/skills.yml`, `_data/certs.yml` added so all portfolio content lives in YAML, not scattered HTML |
+| **GitHub Actions** | `.github/workflows/build.yml` added to validate Jekyll builds on every push |
+| **Static deploy** | `.nojekyll` added so GitHub Pages serves pre-built files; no server-side Jekyll processing needed |
+
+---
+
 ## About
 
 This portfolio showcases hands-on labs, project write-ups, and professional documents focused on:
@@ -26,7 +46,7 @@ This portfolio showcases hands-on labs, project write-ups, and professional docu
 | `labs/` | Detailed hands-on lab walkthroughs |
 | `index.html` | Main portfolio page |
 | `resume.html` | Resume download page |
-| `Elazar_Ferrer_Resume IT.pdf` | Current resume |
+| `assets/docs/Elazar_Ferrer_Resume_IT.pdf` | Current resume |
 
 ## Running Locally
 

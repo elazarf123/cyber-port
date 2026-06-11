@@ -1,1164 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Elazar Ferrer // IT Automation Engineer</title>
-<meta name="description" content="Elazar Ferrer — IT Automation Engineer. I run enterprise IT environments and build the AI systems that automate the work inside them — Active Directory, Microsoft 365, GoHighLevel, Make.com, GPT-4. Open to opportunities." />
-<meta name="author" content="Elazar Ferrer" />
-
-<!-- Open Graph / social share -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Elazar Ferrer // IT Automation Engineer" />
-<meta property="og:description" content="IT Automation Engineer · Active Directory · Microsoft 365 · AI Workflow Systems · PowerShell · GoHighLevel" />
-<meta property="og:url" content="https://elazarf123.github.io/cyber-port/" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Elazar Ferrer // IT Automation Engineer" />
-<meta name="twitter:description" content="IT Automation Engineer · Active Directory · M365 · AI Workflow Systems" />
-
-<!-- Inline SVG favicon -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070c'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='900' font-size='16' fill='%2300f0ff'%3EEF%3C/text%3E%3Ctext x='50%25' y='92%25' text-anchor='middle' font-family='monospace' font-size='7' fill='%23ff2bd6'%3E//%3C/text%3E%3C/svg%3E" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elazar Ferrer — IT Systems & Identity Administrator</title>
+<meta name="description" content="Elazar Ferrer — IT Systems & Identity Administrator. Active Directory, Microsoft 365, Entra ID, PowerShell automation, and security. Hands-on labs and case studies.">
+<meta property="og:title" content="Elazar Ferrer — IT Systems & Identity Administrator">
+<meta property="og:description" content="Active Directory • M365 • Entra ID • PowerShell • Security+. Hands-on labs and real-world identity administration.">
+<meta property="og:type" content="website">
 <style>
-  :root {
-    --bg: #05070c;
-    --bg-2: #0a0f1a;
-    --grid: rgba(0, 240, 255, 0.06);
-    --neon: #00f0ff;
-    --neon-2: #ff2bd6;
-    --neon-3: #b6ff00;
-    --ink: #e8f6ff;
-    --muted: #6b7a90;
-    --line: rgba(0, 240, 255, 0.18);
-    --card: rgba(10, 18, 30, 0.72);
+  :root{
+    --bg:#070b14;
+    --bg-2:#0b1120;
+    --bg-card:#0e1628;
+    --border:#1c2940;
+    --border-hi:#2a3d5e;
+    --text:#dbe4f3;
+    --text-dim:#8294b0;
+    --accent:#34e0c4;
+    --accent-2:#5b9dff;
+    --accent-soft:rgba(52,224,196,.12);
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--accent);color:#04211b}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,11,20,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:var(--mono);font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;letter-spacing:.5px}
+  .logo span{color:var(--text-dim)}
+  .nav-links{display:flex;gap:4px;list-style:none}
+  .nav-links a{color:var(--text-dim);text-decoration:none;font-size:14px;padding:8px 14px;border-radius:8px;transition:.2s}
+  .nav-links a:hover{color:var(--accent);background:var(--accent-soft)}
+  .nav-cta{font-family:var(--mono);font-size:13px;color:#04211b!important;background:var(--accent);font-weight:600}
+  .nav-cta:hover{background:#5ff0d8!important;color:#04211b!important}
+  .menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);font-size:20px;padding:4px 12px;border-radius:8px;cursor:pointer}
+  @media(max-width:760px){
+    .menu-btn{display:block}
+    .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg-2);flex-direction:column;padding:12px;border-bottom:1px solid var(--border)}
+    .nav-links.open{display:flex}
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  .kicker{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  h2{font-size:clamp(26px,4vw,34px);font-weight:700;margin-bottom:14px;letter-spacing:-.5px}
+  .section-sub{color:var(--text-dim);max-width:640px;margin-bottom:42px;font-size:16px}
 
-  html, body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 15px;
-    line-height: 1.6;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
+  /* ---------- HERO ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(ellipse 60% 50% at 70% 20%,rgba(91,157,255,.08),transparent),
+    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(52,224,196,.07),transparent)}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;width:100%}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(34px,6vw,56px);font-weight:800;letter-spacing:-1.5px;line-height:1.08;margin:14px 0 18px}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-tag{font-family:var(--mono);color:var(--accent);font-size:14px;letter-spacing:1px}
+  .hero p.lede{color:var(--text-dim);font-size:17px;max-width:540px;margin-bottom:30px}
+  .hero p.lede strong{color:var(--text)}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;transition:.2s;border:1px solid transparent}
+  .btn-primary{background:var(--accent);color:#04211b}
+  .btn-primary:hover{background:#5ff0d8;transform:translateY(-2px)}
+  .btn-ghost{border-color:var(--border-hi);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .hero-meta{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;color:var(--text-dim)}
+  .hero-meta span b{color:var(--accent);font-weight:600}
 
-  /* Animated grid + scanline background */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(0,240,255,0.03), rgba(255,43,214,0.03)),
-      radial-gradient(ellipse at 50% 0%, rgba(0,240,255,0.18), transparent 55%),
-      radial-gradient(ellipse at 80% 100%, rgba(255,43,214,0.12), transparent 55%),
-      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
-      var(--bg);
-    z-index: -2;
-    animation: gridShift 18s linear infinite;
-  }
+  /* terminal card */
+  .term{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45);font-family:var(--mono);font-size:13.5px}
+  .term-bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:var(--bg-2);border-bottom:1px solid var(--border)}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+  .term-title{margin-left:8px;color:var(--text-dim);font-size:12px}
+  .term-body{padding:18px 20px;line-height:1.9;min-height:240px}
+  .term-body .p{color:var(--accent)}
+  .term-body .c{color:var(--text-dim)}
+  .term-body .o{color:var(--text)}
+  .term-body .ok{color:#28c840}
+  .cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:middle;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
 
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.02) 0px,
-      rgba(255,255,255,0.02) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    pointer-events: none;
-    z-index: -1;
-    mix-blend-mode: overlay;
-  }
+  /* ---------- STATS STRIP ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-30px;position:relative;z-index:2}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+  .stat b{display:block;font-size:26px;color:var(--accent);font-weight:800;letter-spacing:-.5px}
+  .stat span{font-size:13px;color:var(--text-dim)}
 
-  @keyframes gridShift {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 0 0, 0 0, 0 0, 40px 40px, 40px 40px; }
-  }
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+  .about p{color:var(--text-dim);margin-bottom:16px;font-size:16px}
+  .about p strong{color:var(--text)}
+  .focus-list{list-style:none;display:grid;gap:12px}
+  .focus-list li{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:14.5px}
+  .focus-list b{color:var(--accent);font-family:var(--mono);font-size:13px;display:block;margin-bottom:2px}
 
-  a { color: var(--neon); text-decoration: none; transition: all 0.15s ease; }
-  a:hover { color: var(--neon-2); text-shadow: 0 0 8px var(--neon-2); }
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:960px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.skills-grid{grid-template-columns:1fr}}
+  .skill-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:.25s}
+  .skill-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .skill-card h3{font-family:var(--mono);font-size:14px;color:var(--accent);margin-bottom:14px;letter-spacing:.5px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;font-family:var(--mono);color:var(--text-dim);background:var(--bg-2);border:1px solid var(--border);padding:4px 10px;border-radius:999px;transition:.2s}
+  .skill-card:hover .chip{border-color:var(--border-hi)}
 
-  /* Nav */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 32px;
-    background: rgba(5, 7, 12, 0.65);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-  }
-  nav .brand {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: var(--neon);
-    font-size: 14px;
-  }
-  nav .brand span { color: var(--neon-2); }
-  nav ul { list-style: none; display: flex; gap: 28px; }
-  nav ul a {
-    font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
-    color: var(--muted);
-  }
-  nav ul a:hover { color: var(--neon); }
+  /* ---------- LABS ---------- */
+  .labs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.labs-grid{grid-template-columns:1fr}}
+  .lab{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:var(--text);transition:.25s;position:relative}
+  .lab:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+  .lab-num{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:1.5px}
+  .lab h3{font-size:18px;font-weight:700;letter-spacing:-.3px}
+  .lab p{color:var(--text-dim);font-size:14.5px;flex:1}
+  .lab .chips{margin-top:4px}
+  .lab-go{font-family:var(--mono);font-size:13px;color:var(--accent);opacity:0;transform:translateX(-6px);transition:.25s}
+  .lab:hover .lab-go{opacity:1;transform:translateX(0)}
 
-  /* Container */
-  section { max-width: 1100px; margin: 0 auto; padding: 120px 32px 60px; }
+  /* ---------- CERTS ---------- */
+  .certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
+  @media(max-width:860px){.certs-grid{grid-template-columns:1fr}}
+  .cert{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:.25s}
+  .cert:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .cert .badge{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:#04211b;background:var(--accent);padding:3px 10px;border-radius:999px;font-weight:700;margin-bottom:12px}
+  .cert h3{font-size:17px;margin-bottom:4px}
+  .cert span{color:var(--text-dim);font-size:13.5px}
+  .progress-row{display:flex;flex-direction:column;gap:14px}
+  .prog{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14.5px}
+  .prog-top b{font-weight:600}
+  .prog-top span{font-family:var(--mono);font-size:12.5px;color:var(--text-dim)}
+  .bar{height:6px;background:var(--bg-2);border-radius:999px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px}
 
-  /* Hero */
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
-  .hero .terminal-line {
-    color: var(--neon-3);
-    font-size: 13px;
-    margin-bottom: 24px;
-    opacity: 0.85;
-  }
-  .hero .terminal-line::before { content: '$ '; color: var(--muted); }
-  .hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(42px, 7vw, 96px);
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
-    color: var(--ink);
-    position: relative;
-    text-shadow:
-      0 0 20px rgba(0,240,255,0.3),
-      0 0 40px rgba(0,240,255,0.15);
-  }
-  .hero h1 .glitch {
-    position: relative;
-    display: inline-block;
-    color: var(--neon);
-  }
-  .hero h1 .glitch::before,
-  .hero h1 .glitch::after {
-    content: attr(data-text);
-    position: absolute; top: 0; left: 0;
-    width: 100%;
-    overflow: hidden;
-  }
-  .hero h1 .glitch::before {
-    color: var(--neon-2);
-    transform: translate(-2px, 0);
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    animation: glitch1 3s infinite linear alternate;
-  }
-  .hero h1 .glitch::after {
-    color: var(--neon-3);
-    transform: translate(2px, 0);
-    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-    animation: glitch2 2.2s infinite linear alternate;
-  }
-  @keyframes glitch1 {
-    0%, 90% { transform: translate(-2px, 0); }
-    92% { transform: translate(-6px, 2px); }
-    94% { transform: translate(3px, -2px); }
-    96% { transform: translate(-2px, 1px); }
-    100% { transform: translate(-2px, 0); }
-  }
-  @keyframes glitch2 {
-    0%, 88% { transform: translate(2px, 0); }
-    90% { transform: translate(6px, -2px); }
-    93% { transform: translate(-3px, 2px); }
-    96% { transform: translate(2px, -1px); }
-    100% { transform: translate(2px, 0); }
-  }
+  /* ---------- CONTACT ---------- */
+  .contact-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-2));border:1px solid var(--border-hi);border-radius:18px;padding:clamp(28px,5vw,56px);text-align:center}
+  .contact-card h2{margin-bottom:10px}
+  .contact-card p{color:var(--text-dim);max-width:520px;margin:0 auto 30px}
+  .contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
 
-  .hero h2 {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 400;
-    font-size: clamp(16px, 2vw, 22px);
-    color: var(--muted);
-    margin-top: 16px;
-    letter-spacing: 1px;
-  }
-  .hero h2 .accent { color: var(--neon); }
+  footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+  footer a{color:var(--accent);text-decoration:none}
 
-  .hero .bio {
-    max-width: 640px;
-    margin-top: 32px;
-    color: var(--ink);
-    opacity: 0.8;
-    font-size: 16px;
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+    .cursor{animation:none}
   }
-
-  .hero .stats {
-    display: flex; gap: 40px;
-    margin-top: 48px;
-    flex-wrap: wrap;
-  }
-  .hero .stats .stat {
-    border-left: 2px solid var(--neon);
-    padding-left: 14px;
-  }
-  .hero .stats .stat .num {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--neon);
-  }
-  .hero .stats .stat .label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--muted);
-  }
-
-  .hero .location {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 18px;
-  }
-  .hero .location .pulse {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--neon-3); box-shadow: 0 0 8px var(--neon-3);
-    animation: pulse 1.4s infinite;
-  }
-  .hero .location .sep { color: var(--line); }
-  .hero .location .open { color: var(--neon-3); }
-
-  .hero .certs {
-    margin-top: 24px;
-    display: flex; gap: 8px; flex-wrap: wrap;
-  }
-  .hero .certs .cert {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 6px 12px;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    background: rgba(0,0,0,0.3);
-  }
-  .hero .certs .cert.active { color: var(--neon-3); border-color: rgba(182,255,0,0.4); }
-  .hero .certs .cert.compliance { color: var(--neon-2); border-color: rgba(255,43,214,0.35); }
-
-  .hero .cta {
-    margin-top: 40px;
-    display: flex; gap: 16px; flex-wrap: wrap;
-  }
-  .btn.ghost {
-    border-color: var(--line); color: var(--ink);
-    background: rgba(255,255,255,0.03);
-  }
-  .btn.ghost:hover {
-    background: rgba(255,255,255,0.08); color: var(--neon-3);
-    border-color: var(--neon-3); box-shadow: 0 0 20px rgba(182,255,0,0.25);
-  }
-  .btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 24px;
-    border: 1px solid var(--neon);
-    background: rgba(0, 240, 255, 0.05);
-    color: var(--neon);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-  .btn:hover {
-    background: var(--neon);
-    color: var(--bg);
-    box-shadow: 0 0 30px rgba(0,240,255,0.5);
-  }
-  .btn.alt {
-    border-color: var(--neon-2);
-    color: var(--neon-2);
-    background: rgba(255,43,214,0.05);
-  }
-  .btn.alt:hover {
-    background: var(--neon-2);
-    color: var(--bg);
-    box-shadow: 0 0 30px rgba(255,43,214,0.5);
-  }
-
-  /* Section headers */
-  .section-head {
-    margin-bottom: 48px;
-    border-left: 3px solid var(--neon);
-    padding-left: 20px;
-  }
-  .section-head .kicker {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--neon-2); margin-bottom: 8px;
-  }
-  .section-head h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(28px, 4vw, 44px);
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.5px;
-  }
-  .section-head p {
-    margin-top: 12px;
-    color: var(--muted);
-    max-width: 700px;
-  }
-
-  /* Projects */
-  .projects {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .project {
-    background: var(--card);
-    border: 1px solid var(--line);
-    padding: 36px;
-    position: relative;
-    backdrop-filter: blur(6px);
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-    transition: all 0.3s ease;
-  }
-  .project::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 60px; height: 3px;
-    background: var(--neon);
-    box-shadow: 0 0 12px var(--neon);
-  }
-  .project:hover {
-    border-color: var(--neon);
-    box-shadow: 0 0 40px rgba(0,240,255,0.15), inset 0 0 20px rgba(0,240,255,0.05);
-    transform: translateY(-2px);
-  }
-  .project .head {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    gap: 20px; flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-  .project h4 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--neon);
-    letter-spacing: 0.5px;
-  }
-  .project .repo-tag {
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted);
-    padding: 4px 10px;
-    border: 1px solid var(--line);
-  }
-  .project .tagline {
-    color: var(--ink);
-    opacity: 0.85;
-    margin-bottom: 20px;
-    font-size: 15px;
-  }
-  .project .case {
-    margin-top: 24px;
-    padding: 20px;
-    background: rgba(0,0,0,0.35);
-    border-left: 2px solid var(--neon-3);
-    font-size: 14px;
-  }
-  .project .case .label {
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--neon-3); margin-bottom: 10px;
-  }
-  .project ul.features {
-    list-style: none;
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 8px 16px;
-  }
-  .project ul.features li {
-    padding-left: 20px;
-    position: relative;
-    color: var(--ink);
-    opacity: 0.85;
-    font-size: 13px;
-  }
-  .project ul.features li::before {
-    content: '>';
-    position: absolute; left: 0;
-    color: var(--neon);
-  }
-  .project .stack {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    margin-top: 24px;
-  }
-  .project .stack span {
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    background: rgba(0,0,0,0.3);
-  }
-  .project .stack span.hot {
-    color: var(--neon-2);
-    border-color: rgba(255,43,214,0.4);
-  }
-  .project .links {
-    margin-top: 28px;
-    display: flex; gap: 14px; flex-wrap: wrap;
-  }
-  .project .links a {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 8px 14px;
-    border: 1px solid var(--neon);
-  }
-  .project .links a:hover {
-    background: var(--neon);
-    color: var(--bg);
-  }
-
-  /* Proof / metrics row */
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-top: 24px;
-  }
-  .metric {
-    padding: 20px;
-    border: 1px solid var(--line);
-    background: rgba(0,0,0,0.25);
-    text-align: center;
-  }
-  .metric .n {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--neon);
-    display: block;
-  }
-  .metric .l {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-
-  /* Stack grid */
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-  }
-  .stack-card {
-    padding: 24px;
-    border: 1px solid var(--line);
-    background: var(--card);
-    position: relative;
-    transition: all 0.2s ease;
-  }
-  .stack-card:hover {
-    border-color: var(--neon-2);
-    box-shadow: 0 0 20px rgba(255,43,214,0.15);
-  }
-  .stack-card h5 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    color: var(--neon-2);
-    letter-spacing: 2px;
-    margin-bottom: 14px;
-  }
-  .stack-card ul { list-style: none; }
-  .stack-card ul li {
-    font-size: 13px;
-    padding: 4px 0;
-    color: var(--ink);
-    opacity: 0.85;
-    border-bottom: 1px dashed rgba(255,255,255,0.05);
-  }
-  .stack-card ul li:last-child { border-bottom: none; }
-
-  /* Terminal */
-  .terminal {
-    background: #000;
-    border: 1px solid var(--line);
-    padding: 0;
-    font-size: 13px;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    overflow: hidden;
-  }
-  .terminal .bar {
-    background: #0a0f1a;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .terminal .bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
-  .terminal .bar .dot:nth-child(1) { background: #ff5f56; }
-  .terminal .bar .dot:nth-child(2) { background: #ffbd2e; }
-  .terminal .bar .dot:nth-child(3) { background: #27c93f; }
-  .terminal .bar .title { margin-left: 12px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
-  .terminal pre {
-    padding: 20px;
-    color: var(--neon-3);
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 13px;
-    line-height: 1.7;
-  }
-  .terminal pre .comment { color: var(--muted); }
-  .terminal pre .k { color: var(--neon); }
-  .terminal pre .s { color: var(--neon-2); }
-  .terminal pre .v { color: #ffc857; }
-
-  /* Diagram containers */
-  .diagram {
-    border: 1px solid var(--line);
-    background: #000;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    overflow: hidden;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .diagram:hover {
-    border-color: var(--neon);
-    box-shadow: 0 0 30px rgba(0,240,255,0.12);
-  }
-  .diagram-bar {
-    background: #0a0f1a;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .diagram-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .diagram-bar .dot:nth-child(1) { background: #ff5f56; }
-  .diagram-bar .dot:nth-child(2) { background: #ffbd2e; }
-  .diagram-bar .dot:nth-child(3) { background: #27c93f; }
-  .diagram-title { margin-left: 12px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
-
-  /* Contact */
-  .contact-wrap {
-    text-align: center;
-    padding: 60px 20px;
-  }
-  .contact-wrap h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(32px, 5vw, 56px);
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  .contact-wrap p {
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto 40px;
-  }
-
-  footer {
-    text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  footer .heartbeat { color: var(--neon-2); display: inline-block; animation: pulse 1.2s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  /* Cursor blink */
-  .cursor { display: inline-block; width: 10px; background: var(--neon); margin-left: 2px; animation: blink 1s infinite; }
-  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
-
-  /* Noise overlay */
-  .noise {
-    position: fixed; inset: 0;
-    pointer-events: none;
-    opacity: 0.04;
-    z-index: 1000;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  @media (max-width: 640px) {
-    nav { padding: 14px 16px; }
-    nav ul { display: none; }
-    section { padding: 100px 20px 40px; }
-    .project { padding: 24px; }
-  }
-</style>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-/* ── Readability overrides ── */
-.hero .bio,
-.project .tagline,
-.project .case,
-.project ul.features li,
-.stack-card ul li,
-.section-head p,
-.contact-wrap p,
-footer { font-family: 'Inter', system-ui, sans-serif !important; }
-
-.hero .bio { font-size: 17px !important; line-height: 1.8 !important; opacity: 0.92 !important; letter-spacing: 0 !important; }
-.project .tagline { font-size: 15px !important; line-height: 1.75 !important; opacity: 0.9 !important; letter-spacing: 0 !important; }
-.project .case { font-size: 14px !important; line-height: 1.75 !important; letter-spacing: 0 !important; }
-.project ul.features li { font-size: 14px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
-.stack-card ul li { font-size: 14px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
-.section-head p { font-size: 16px !important; line-height: 1.75 !important; letter-spacing: 0 !important; }
-.contact-wrap p { font-size: 16px !important; line-height: 1.75 !important; letter-spacing: 0 !important; }
-
-/* Keep mono only for nav, labels, kickers, buttons, terminal, code */
-nav, nav ul a, .hero .terminal-line, .hero .location,
-.hero h2, .section-head .kicker, .project .head h4,
-.project .repo-tag, .project .links a, .project .stack span,
-.project .case .label, .cert, .metric .l, .btn,
-.stack-card h5, .terminal, .diagram { font-family: 'JetBrains Mono', monospace !important; }
-
-/* Reduce scanlines + grid noise */
-body::after { opacity: 0 !important; }
-body::before { opacity: 0.65 !important; }
 </style>
 </head>
 <body>
 
-<div class="noise"></div>
-
 <nav>
-  <div class="brand">EF<span>//</span>IT-AUTOMATION</div>
-  <ul>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#proof">Proof</a></li>
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="./Elazar_Ferrer_Resume%20(2).pdf" target="_blank" rel="noopener">Résumé</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a class="logo" href="#top">elazar<span>@</span>ferrer<span>:~$</span></a>
+    <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#labs">Labs</a></li>
+      <li><a href="#certs">Certifications</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a class="nav-cta" href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="top">
-  <div class="terminal-line">init --operator "elazar.ferrer" --mode it-automation-engineer</div>
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-tag">// IT Systems & Identity Administrator</div>
+      <h1>I keep identity and access <em>secure, automated,</em> and running.</h1>
+      <p class="lede">Active Directory, Microsoft 365, and Entra ID administrator with healthcare IT support experience, currently pursuing <strong>CompTIA Security+</strong>. I build PowerShell automation that turns hours of manual admin work into minutes — and I document everything.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="#labs">View my labs ↓</a>
+        <a class="btn btn-ghost" href="resume.html">Resume</a>
+        <a class="btn btn-ghost" href="https://github.com/elazarf123" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="hero-meta">
+        <span><b>📍</b> Lubbock, TX · Remote-ready</span>
+        <span><b>🔐</b> Security+ in progress</span>
+      </div>
+    </div>
 
-  <div class="location">
-    <span class="pulse"></span>
-    <span>Lubbock, TX</span>
-    <span class="sep">·</span>
-    <span>Remote-friendly</span>
-    <span class="sep">·</span>
-    <span class="open">Open to opportunities</span>
+    <div class="term" aria-hidden="true">
+      <div class="term-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <span class="term-title">elazar@identity-lab — powershell</span>
+      </div>
+      <div class="term-body" id="termBody"></div>
+    </div>
   </div>
+</header>
 
-  <h1>
-    ELAZAR <span class="glitch" data-text="FERRER">FERRER</span><span class="cursor"></span>
-  </h1>
-  <h2>// IT Automation Engineer <span class="accent">· Active Directory · Microsoft 365 · AI Workflow Systems</span></h2>
-  <p class="bio">
-    I run enterprise IT environments and build the AI systems that automate the work inside them.
-    Identity admin background: managed AD lifecycle for 500+ users on a HIPAA/HITECH CVS Health contract — provisioning, deprovisioning, MFA, compliance.
-    AI automation side: currently building AutomateIQ, an AI Voice Receptionist for home-service businesses on GoHighLevel (7 production workflows, &lt;10s emergency response).
-    Most engineers pick a lane. I work both sides of the same problem.
-  </p>
-
-  <div class="stats">
-    <div class="stat"><div class="num">2+</div><div class="label">Years IT Experience</div></div>
-    <div class="stat"><div class="num">5+</div><div class="label">Automation Systems Built</div></div>
-    <div class="stat"><div class="num">500+</div><div class="label">AD Accounts Managed</div></div>
-    <div class="stat"><div class="num">99%</div><div class="label">Uptime Delivered</div></div>
+<div class="wrap">
+  <div class="stats reveal">
+    <div class="stat"><b>6</b><span>Hands-on labs built</span></div>
+    <div class="stat"><b>2</b><span>Certifications earned</span></div>
+    <div class="stat"><b>40+</b><span>Technologies practiced</span></div>
+    <div class="stat"><b>100%</b><span>Documented & on GitHub</span></div>
   </div>
+</div>
 
-  <div class="certs">
-    <span class="cert active">Security+ · In Progress</span>
-    <span class="cert">Google Cybersecurity Cert</span>
-    <span class="cert">Google Healthcare IT (JHU)</span>
-    <span class="cert compliance">HIPAA / HITECH</span>
-    <span class="cert compliance">NIST CSF 2.0</span>
-    <span class="cert active">Google Data Analytics · 2026</span>
-  </div>
-
-  <div class="cta">
-    <a class="btn" href="#work">&gt; View Projects</a>
-    <a class="btn alt" href="./Elazar_Ferrer_Resume%20(2).pdf" target="_blank" rel="noopener">&gt; Download Résumé</a>
-    <a class="btn ghost" href="https://linkedin.com/in/elazarf" target="_blank" rel="noopener">&gt; LinkedIn</a>
-    <a class="btn ghost" href="https://github.com/elazarf123" target="_blank" rel="noopener">&gt; GitHub</a>
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about reveal">
+      <div class="kicker">// about</div>
+      <h2>Healthcare IT roots, identity-first mindset.</h2>
+      <p>I started in high-volume healthcare IT support — helping pharmacy staff and clinical users at <strong>CVS Health</strong> get back into critical systems when minutes mattered. That's where I learned the discipline behind good identity administration: verify, diagnose, fix, document, prevent.</p>
+      <p>Today I run a full enterprise lab environment — multi-VM Active Directory domains, an M365 E5 tenant with Conditional Access, PKI/LDAPS, and a growing library of <strong>PowerShell automation</strong> published on GitHub.</p>
+      <p>Every lab on this site ends the same way real incidents should: with a root-cause write-up and an after-action report.</p>
+    </div>
+    <ul class="focus-list reveal">
+      <li><b>IDENTITY & DIRECTORY</b>AD DS, GPO, OU design, FSMO, Kerberos, AD CS / PKI / LDAPS</li>
+      <li><b>MICROSOFT 365 & AZURE</b>Entra ID, Exchange Online, Intune, Conditional Access, SSPR</li>
+      <li><b>SECURITY</b>Zero Trust, NIST CSF 2.0, HIPAA/HITECH, vulnerability assessment, IR</li>
+      <li><b>AUTOMATION</b>PowerShell bulk provisioning, stale-account detection, group audits</li>
+    </ul>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="work">
-  <div class="section-head">
-    <div class="kicker">// Featured Repositories</div>
-    <h3>Projects &amp; Case Studies</h3>
-    <p>Enterprise IT pipelines and AI-powered automation systems — built from scratch, tested in production. AD lifecycle, M365 administration, GoHighLevel workflows, and GPT-4 integrations. Real problems, shipped solutions, measurable results.</p>
-  </div>
-
-  <div class="projects">
-
-    <!-- Project 1: PowerShell AD/M365 -->
-    <article class="project">
-      <div class="head">
-        <h4>powershell-ad-m365-scripts</h4>
-        <span class="repo-tag">PowerShell · Production</span>
+<!-- ================= SKILLS ================= -->
+<section id="skills" style="background:var(--bg-2);border-block:1px solid var(--border)">
+  <div class="wrap">
+    <div class="kicker reveal">// skills</div>
+    <h2 class="reveal">Technical toolkit</h2>
+    <p class="section-sub reveal">Practiced hands-on in lab environments and production support — not just listed.</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h3>▸ Identity & Directory</h3>
+        <div class="chips"><span class="chip">Active Directory</span><span class="chip">Entra ID</span><span class="chip">LDAP / LDAPS</span><span class="chip">GPO</span><span class="chip">FSMO Roles</span><span class="chip">AD Replication</span><span class="chip">Kerberos / NTLM</span><span class="chip">AD CS / PKI</span></div>
       </div>
-      <p class="tagline">
-        Enterprise PowerShell toolkit for Active Directory and Microsoft 365 administration.
-        Bulk provisioning, stale account detection, group auditing, license reporting, and GPO backup —
-        battle-tested in multi-tenant environments.
-      </p>
-
-      <ul class="features">
-        <li>Bulk user provisioning from CSV</li>
-        <li>Stale account &amp; inactive mailbox detection</li>
-        <li>AD group membership auditing</li>
-        <li>M365 license utilization reports</li>
-        <li>GPO backup &amp; restore automation</li>
-        <li>Shared mailbox &amp; distribution group ops</li>
-      </ul>
-
-      <div class="case">
-        <div class="label">// Case Study · Offboarding Pipeline</div>
-        <strong>Problem:</strong> Manual offboarding took ~45 min per user across AD, Exchange, Teams, OneDrive, and license reclaim — error-prone and inconsistent.<br>
-        <strong>Solution:</strong> Single-invocation script: disables AD account, converts mailbox to shared, wipes Teams/OneDrive ownership, reclaims E3 license, archives data to retention container, emails HR &amp; manager with summary.<br>
-        <strong>Result:</strong> <span style="color:var(--neon-3)">45 min → 90 sec</span> per offboarding · zero orphaned licenses · full audit trail.
+      <div class="skill-card reveal">
+        <h3>▸ Microsoft 365</h3>
+        <div class="chips"><span class="chip">Exchange Online</span><span class="chip">Conditional Access</span><span class="chip">Intune / MDM</span><span class="chip">Teams Admin</span><span class="chip">SharePoint</span><span class="chip">SSPR</span><span class="chip">Azure AD Connect</span><span class="chip">Licensing</span></div>
       </div>
-
-      <div class="stack">
-        <span class="hot">PowerShell 7</span>
-        <span>Microsoft Graph SDK</span>
-        <span>ActiveDirectory Module</span>
-        <span>ExchangeOnlineManagement</span>
-        <span>MSOnline</span>
-        <span>Azure AD</span>
+      <div class="skill-card reveal">
+        <h3>▸ Networking & Infra</h3>
+        <div class="chips"><span class="chip">DNS / DHCP</span><span class="chip">TCP/IP</span><span class="chip">VPN / IPSEC</span><span class="chip">SPF / DKIM / DMARC</span><span class="chip">SRV Records</span><span class="chip">Patch Mgmt</span><span class="chip">Vuln Assessment</span></div>
       </div>
-
-      <div class="links">
-        <a href="https://github.com/elazarf123/powershell-ad-m365-scripts" target="_blank" rel="noopener">View Repo →</a>
+      <div class="skill-card reveal">
+        <h3>▸ Scripting & Automation</h3>
+        <div class="chips"><span class="chip">PowerShell</span><span class="chip">Python</span><span class="chip">Bash</span><span class="chip">SQL</span><span class="chip">CSV Bulk Provisioning</span><span class="chip">Search-ADAccount</span><span class="chip">Exchange Online PS</span></div>
       </div>
-    </article>
-
-        <!-- Project 3: AutomateIQ — Home Service (GHL) -->
-    <article class="project">
-      <div class="head">
-        <h4>automateiq-home-service</h4>
-        <span class="repo-tag">GoHighLevel · Voice AI · In Production</span>
+      <div class="skill-card reveal">
+        <h3>▸ Security & Compliance</h3>
+        <div class="chips"><span class="chip">Zero Trust</span><span class="chip">HIPAA / HITECH</span><span class="chip">NIST CSF 2.0</span><span class="chip">SIEM / Splunk</span><span class="chip">Incident Response</span><span class="chip">Root Cause Analysis</span><span class="chip">AAR Docs</span></div>
       </div>
-      <p class="tagline">
-        AI Voice Receptionist for home-service businesses — HVAC, plumbing, electrical, roofing.
-        Built on GoHighLevel: 7 interconnected workflows that handle every stage of the customer
-        lifecycle from missed call to Google review, fully automated.
-      </p>
-
-      <ul class="features">
-        <li>Missed-call text-back fires in &lt; 60s, 24/7</li>
-        <li>Appointment confirmation + 24hr + 1hr reminder chain</li>
-        <li>Emergency escalation: severity router + owner phone call</li>
-        <li>Debounce logic prevents duplicate emergency alerts</li>
-        <li>No-show recovery: 2hr + 24hr follow-up with rebook check</li>
-        <li>Post-job review request SMS → Google review link</li>
-        <li>Voice AI (Alex) with custom emergency detection prompt</li>
-      </ul>
-
-      <div class="case">
-        <div class="label">// Case Study · Emergency Escalation Workflow · All 4 Tests Passed</div>
-        <strong>Problem:</strong> A homeowner calls at 2 AM about a gas leak or burst pipe. Call goes to voicemail. They find another contractor.<br>
-        <strong>Solution:</strong> Voice AI detects emergency language → applies severity tag → workflow fires: owner phone call within seconds, SMS to caller, email notification, pipeline stage update — all automatic. Debounce prevents duplicate alerts.<br>
-        <strong>Result:</strong> <span style="color:var(--neon-3)">&lt; 10 sec from call end to owner notification</span> · 4/4 test scenarios passed · zero missed emergencies.
+      <div class="skill-card reveal">
+        <h3>▸ Platforms & Tools</h3>
+        <div class="chips"><span class="chip">Windows Server 2019</span><span class="chip">Windows 10/11</span><span class="chip">ServiceNow / Jira</span><span class="chip">Epic / NextGen EHR</span><span class="chip">VirtualBox / VMware</span><span class="chip">TryHackMe</span></div>
       </div>
-
-      <div class="stack">
-        <span class="hot">GoHighLevel</span>
-        <span class="hot">Voice AI</span>
-        <span>Prompt Engineering</span>
-        <span>Conditional Workflows</span>
-        <span>SMS / Email / Phone</span>
-        <span>Pipeline Automation</span>
-        <span>Debounce Logic</span>
-      </div>
-
-      <div class="metrics" style="margin-top:20px;">
-        <div class="metric"><span class="n">7</span><div class="l">Workflows Built</div></div>
-        <div class="metric"><span class="n">&lt;10s</span><div class="l">Emergency Response</div></div>
-        <div class="metric"><span class="n">4/4</span><div class="l">Tests Passed</div></div>
-        <div class="metric"><span class="n">24/7</span><div class="l">Automated Coverage</div></div>
-      </div>
-
-      <div class="links">
-        <a href="https://elazarf123.github.io/cyber-port/" target="_blank" rel="noopener">View Portfolio →</a>
-      </div>
-    </article>
-
-    <!-- Project 2: AutomateIQ -->
-    <article class="project">
-      <div class="head">
-        <h4>automateiq-lead-response</h4>
-        <span class="repo-tag">Make.com · OpenAI · Production</span>
-      </div>
-      <p class="tagline">
-        AI-powered lead response system for real estate agents. Every inbound lead gets a personalized reply within minutes —
-        in the agent's exact voice — 24/7. Built from scratch: voice calibration process, hot-lead detection,
-        Slack alerting, and full Google Sheets audit log.
-      </p>
-
-      <ul class="features">
-        <li>Voice-trained AI via custom per-agent GPT-4 system prompts</li>
-        <li>Webhook intake from Zillow, Realtor.com, &amp; contact forms</li>
-        <li>Hot lead detection → instant Slack alert to agent</li>
-        <li>Full interaction log → Google Sheets (daily review dashboard)</li>
-        <li>30-min onboarding: new agent live in under 10 minutes post-call</li>
-        <li>Prompt engineering calibration from agent's real emails &amp; texts</li>
-      </ul>
-
-      <div class="case">
-        <div class="label">// Case Study · AI Lead Response Engine</div>
-        <strong>Problem:</strong> Real estate agents miss leads every night and weekend — speed-to-lead determines who gets the deal, and manual response doesn't scale.<br>
-        <strong>Solution:</strong> Make.com webhook receives lead → GPT-4 generates response in agent's voice → sent to lead → hot leads routed to Slack → everything logged. Zero agent involvement for routine leads.<br>
-        <strong>Result:</strong> <span style="color:var(--neon-3)">&lt; 3 min response time, 24/7</span> · agent notified only on hot leads · full audit trail per interaction.
-      </div>
-
-      <div class="stack">
-        <span class="hot">OpenAI GPT-4</span>
-        <span class="hot">Make.com</span>
-        <span>Prompt Engineering</span>
-        <span>Webhooks</span>
-        <span>Slack API</span>
-        <span>Google Sheets</span>
-        <span>REST APIs</span>
-      </div>
-
-      <div class="links">
-        <a href="https://github.com/elazarf123/automateiq-lead-response" target="_blank" rel="noopener">View Repo →</a>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- PROOF -->
-<section id="proof">
-  <div class="section-head">
-    <div class="kicker">// Proof of Automation</div>
-    <h3>Numbers &amp; Artifacts</h3>
-    <p>Aggregate impact across the IT scripts and AI workflows shipped in the repos above.</p>
-  </div>
-
-  <div class="metrics">
-    <div class="metric"><span class="n">~100h</span><div class="l">Annual Hours Saved</div></div>
-    <div class="metric"><span class="n">98%</span><div class="l">Provisioning Accuracy</div></div>
-    <div class="metric"><span class="n">7+</span><div class="l">Systems Integrated</div></div>
-  </div>
-
-  <!-- Diagram 1: Offboarding Pipeline -->
-  <div class="diagram" style="margin-top:36px">
-    <div class="diagram-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="diagram-title">pwsh · Invoke-Offboarding.ps1 · fan-out pipeline</span>
-    </div>
-    <svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Offboarding pipeline diagram" style="width:100%;height:auto;display:block;background:#000;">
-      <defs>
-        <filter id="glow-a" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2.5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <marker id="arr-cy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#00f0ff"/>
-        </marker>
-        <marker id="arr-mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#ff2bd6"/>
-        </marker>
-      </defs>
-
-      <!-- Fan-out cyan paths (trigger -> actions) -->
-      <g stroke="#00f0ff" stroke-width="1.2" fill="none" opacity="0.75" marker-end="url(#arr-cy)">
-        <path d="M 200 215 C 265 215 275 62 335 62"/>
-        <path d="M 200 215 C 265 215 275 122 335 122"/>
-        <path d="M 200 215 L 335 182"/>
-        <path d="M 200 215 L 335 242"/>
-        <path d="M 200 215 C 265 215 275 302 335 302"/>
-        <path d="M 200 215 C 265 215 275 362 335 362"/>
-      </g>
-
-      <!-- Fan-in magenta paths (actions -> complete) -->
-      <g stroke="#ff2bd6" stroke-width="1.2" fill="none" opacity="0.75" marker-end="url(#arr-mg)">
-        <path d="M 545 62 C 615 62 620 215 675 215"/>
-        <path d="M 545 122 C 615 122 620 215 675 215"/>
-        <path d="M 545 182 L 675 212"/>
-        <path d="M 545 242 L 675 218"/>
-        <path d="M 545 302 C 615 302 620 215 675 215"/>
-        <path d="M 545 362 C 615 362 620 215 675 215"/>
-      </g>
-
-      <!-- Trigger node -->
-      <g filter="url(#glow-a)">
-        <rect x="20" y="180" width="180" height="70" rx="2" fill="rgba(0,240,255,0.10)" stroke="#00f0ff" stroke-width="1.6"/>
-        <text x="110" y="204" text-anchor="middle" fill="#00f0ff" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">TRIGGER</text>
-        <text x="110" y="224" text-anchor="middle" fill="#e8f6ff" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700">Invoke-Offboarding</text>
-        <text x="110" y="240" text-anchor="middle" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10">-UPN  -ArchiveDays</text>
-      </g>
-
-      <!-- Action nodes -->
-      <g font-family="'JetBrains Mono',monospace">
-        <rect x="335" y="40" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="60" fill="#e8f6ff" font-size="12" font-weight="600">AD Account Disabled</text>
-        <text x="348" y="76" fill="#b6ff00" font-size="10">OK  ·  0.4s</text>
-
-        <rect x="335" y="100" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="120" fill="#e8f6ff" font-size="12" font-weight="600">Mailbox → Shared</text>
-        <text x="348" y="136" fill="#b6ff00" font-size="10">OK  ·  2.1s</text>
-
-        <rect x="335" y="160" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="180" fill="#e8f6ff" font-size="12" font-weight="600">Teams / OneDrive Xfer</text>
-        <text x="348" y="196" fill="#b6ff00" font-size="10">OK  ·  3.7s</text>
-
-        <rect x="335" y="220" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="240" fill="#e8f6ff" font-size="12" font-weight="600">E3 License Reclaimed</text>
-        <text x="348" y="256" fill="#b6ff00" font-size="10">OK  ·  0.9s</text>
-
-        <rect x="335" y="280" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="300" fill="#e8f6ff" font-size="12" font-weight="600">Audit Log Written</text>
-        <text x="348" y="316" fill="#b6ff00" font-size="10">OK  ·  0.2s</text>
-
-        <rect x="335" y="340" width="210" height="44" fill="rgba(0,0,0,0.55)" stroke="#00f0ff" stroke-width="1"/>
-        <text x="348" y="360" fill="#e8f6ff" font-size="12" font-weight="600">HR + Manager Notified</text>
-        <text x="348" y="376" fill="#b6ff00" font-size="10">OK  ·  1.1s</text>
-      </g>
-
-      <!-- Convergence node -->
-      <g filter="url(#glow-a)">
-        <rect x="675" y="180" width="200" height="70" rx="2" fill="rgba(255,43,214,0.10)" stroke="#ff2bd6" stroke-width="1.6"/>
-        <text x="775" y="204" text-anchor="middle" fill="#ff2bd6" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">STATUS</text>
-        <text x="775" y="226" text-anchor="middle" fill="#e8f6ff" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">COMPLETE · 8.4s</text>
-        <text x="775" y="242" text-anchor="middle" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10">full audit trail written</text>
-      </g>
-
-      <!-- Footer legend -->
-      <text x="20" y="418" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.5">// before: ~45 min manual · after: 8.4s automated · 98% run success rate</text>
-    </svg>
-  </div>
-
-  <!-- Diagram 2: Onboarding Workflow -->
-  <div class="diagram" style="margin-top:24px">
-    <div class="diagram-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="diagram-title">n8n · onboarding-workflow.json · fan-out / fan-in</span>
-    </div>
-    <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Onboarding workflow diagram" style="width:100%;height:auto;display:block;background:#000;">
-      <defs>
-        <filter id="glow-b" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2.5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <marker id="arr-cy2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#00f0ff"/>
-        </marker>
-        <marker id="arr-mg2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#ff2bd6"/>
-        </marker>
-        <marker id="arr-gr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#b6ff00"/>
-        </marker>
-      </defs>
-
-      <!-- Stage labels -->
-      <text x="20" y="22" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">STAGE 1 · TRIGGER</text>
-      <text x="225" y="22" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">STAGE 2 · IDENTITY</text>
-      <text x="590" y="22" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">STAGE 3 · SAAS</text>
-      <text x="765" y="22" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">STAGE 4 · CLOSE</text>
-
-      <!-- Linear arrows: Webhook -> AD -> M365 -->
-      <g stroke="#00f0ff" stroke-width="1.3" fill="none" marker-end="url(#arr-cy2)">
-        <path d="M 165 170 L 215 170"/>
-        <path d="M 360 170 L 410 170"/>
-      </g>
-
-      <!-- Fan-out: M365 -> Slack / Zoom / GitHub -->
-      <g stroke="#b6ff00" stroke-width="1.2" fill="none" opacity="0.85" marker-end="url(#arr-gr2)">
-        <path d="M 555 170 C 580 170 580 90 600 90"/>
-        <path d="M 555 170 L 600 170"/>
-        <path d="M 555 170 C 580 170 580 250 600 250"/>
-      </g>
-
-      <!-- Fan-in: Slack / Zoom / GitHub -> Email.Welcome -->
-      <g stroke="#ff2bd6" stroke-width="1.2" fill="none" opacity="0.85" marker-end="url(#arr-mg2)">
-        <path d="M 740 90 C 760 90 760 160 770 160"/>
-        <path d="M 740 170 L 770 165"/>
-        <path d="M 740 250 C 760 250 760 175 770 175"/>
-      </g>
-
-      <!-- Email -> Ticket -->
-      <g stroke="#ff2bd6" stroke-width="1.3" fill="none" marker-end="url(#arr-mg2)">
-        <path d="M 830 195 L 830 228"/>
-      </g>
-
-      <!-- Stage 1: HRIS Webhook -->
-      <g filter="url(#glow-b)">
-        <rect x="20" y="140" width="145" height="60" rx="2" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="1.6"/>
-        <text x="92" y="162" text-anchor="middle" fill="#00f0ff" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">WEBHOOK</text>
-        <text x="92" y="182" text-anchor="middle" fill="#e8f6ff" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700">HRIS</text>
-        <text x="92" y="196" text-anchor="middle" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="9">new_hire event</text>
-      </g>
-
-      <!-- Stage 2: AD + M365 -->
-      <g font-family="'JetBrains Mono',monospace">
-        <rect x="215" y="145" width="145" height="50" fill="rgba(0,0,0,0.55)" stroke="#00f0ff"/>
-        <text x="287" y="165" text-anchor="middle" fill="#e8f6ff" font-size="12" font-weight="600">AD.CreateUser</text>
-        <text x="287" y="181" text-anchor="middle" fill="#6b7a90" font-size="10">OU · group · pwd</text>
-
-        <rect x="410" y="145" width="145" height="50" fill="rgba(0,0,0,0.55)" stroke="#00f0ff"/>
-        <text x="482" y="165" text-anchor="middle" fill="#e8f6ff" font-size="12" font-weight="600">M365.AssignLicense</text>
-        <text x="482" y="181" text-anchor="middle" fill="#6b7a90" font-size="10">E3 · Teams · OneDrive</text>
-      </g>
-
-      <!-- Stage 3: SaaS parallel nodes -->
-      <g font-family="'JetBrains Mono',monospace">
-        <rect x="600" y="65" width="140" height="50" fill="rgba(0,0,0,0.55)" stroke="#b6ff00"/>
-        <text x="670" y="85" text-anchor="middle" fill="#e8f6ff" font-size="12" font-weight="600">Slack.Invite</text>
-        <text x="670" y="101" text-anchor="middle" fill="#b6ff00" font-size="10">#welcome · DM</text>
-
-        <rect x="600" y="145" width="140" height="50" fill="rgba(0,0,0,0.55)" stroke="#b6ff00"/>
-        <text x="670" y="165" text-anchor="middle" fill="#e8f6ff" font-size="12" font-weight="600">Zoom.Provision</text>
-        <text x="670" y="181" text-anchor="middle" fill="#b6ff00" font-size="10">license · SSO</text>
-
-        <rect x="600" y="225" width="140" height="50" fill="rgba(0,0,0,0.55)" stroke="#b6ff00"/>
-        <text x="670" y="245" text-anchor="middle" fill="#e8f6ff" font-size="12" font-weight="600">GitHub.AddMember</text>
-        <text x="670" y="261" text-anchor="middle" fill="#b6ff00" font-size="10">org · team · 2FA</text>
-      </g>
-
-      <!-- Stage 4: Email + Ticket -->
-      <g font-family="'JetBrains Mono',monospace" filter="url(#glow-b)">
-        <rect x="770" y="145" width="120" height="50" fill="rgba(255,43,214,0.10)" stroke="#ff2bd6" stroke-width="1.4"/>
-        <text x="830" y="165" text-anchor="middle" fill="#ff2bd6" font-size="12" font-weight="700">Email.Welcome</text>
-        <text x="830" y="181" text-anchor="middle" fill="#6b7a90" font-size="10">packet · creds</text>
-
-        <rect x="770" y="228" width="120" height="50" fill="rgba(255,43,214,0.10)" stroke="#ff2bd6" stroke-width="1.4"/>
-        <text x="830" y="248" text-anchor="middle" fill="#ff2bd6" font-size="12" font-weight="700">Ticket.Create</text>
-        <text x="830" y="264" text-anchor="middle" fill="#6b7a90" font-size="10">"Day-1 Check"</text>
-      </g>
-
-      <!-- Footer legend -->
-      <text x="20" y="318" fill="#6b7a90" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.5">// avg runtime: 5m 42s · success rate: 98% · systems touched: 7</text>
-    </svg>
-  </div>
-</section>
-
-<!-- STACK -->
-<section id="stack">
-  <div class="section-head">
-    <div class="kicker">// Arsenal</div>
-    <h3>Stack &amp; Systems</h3>
-    <p>Enterprise IT administration + AI automation. Both sides of the same problem.</p>
-  </div>
-
-  <div class="stack-grid">
-    <div class="stack-card">
-      <h5>Identity</h5>
-      <ul>
-        <li>Active Directory (multi-domain)</li>
-        <li>Entra ID (Azure AD)</li>
-        <li>MFA / SSO · PAM controls</li>
-        <li>Group Policy (GPO)</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>Microsoft 365</h5>
-      <ul>
-        <li>Exchange Online</li>
-        <li>Teams &amp; SharePoint</li>
-        <li>License lifecycle</li>
-        <li>Tenant administration</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>AI &amp; LLM</h5>
-      <ul>
-        <li>OpenAI GPT-4 / GPT-4o</li>
-        <li>Prompt engineering &amp; voice calibration</li>
-        <li>Make.com (automation backbone)</li>
-        <li>Webhook orchestration</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>Automation</h5>
-      <ul>
-        <li>PowerShell (AD / Exchange / AzureAD)</li>
-        <li>Python &amp; Bash</li>
-        <li>n8n · REST APIs · OAuth 2.0</li>
-        <li>Webhooks &amp; event-driven pipelines</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>Infrastructure</h5>
-      <ul>
-        <li>Windows Server 2019</li>
-        <li>DNS · DHCP · PKI</li>
-        <li>Windows 10 endpoints</li>
-        <li>ServiceNow / Jira</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>Security &amp; Compliance</h5>
-      <ul>
-        <li>HIPAA / HITECH</li>
-        <li>NIST CSF 2.0</li>
-        <li>SIEM (Splunk) · Incident Response</li>
-        <li>Vulnerability &amp; Patch Mgmt</li>
-      </ul>
-    </div>
-    <div class="stack-card">
-      <h5>Track Record</h5>
-      <ul>
-        <li>500+ AD accounts administered</li>
-        <li>100+ onboarding cycles</li>
-        <li>99% uptime · 20% faster MTTR</li>
-        <li>Zero access-delay incidents</li>
-      </ul>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ================= LABS ================= -->
+<section id="labs">
+  <div class="wrap">
+    <div class="kicker reveal">// hands-on labs</div>
+    <h2 class="reveal">Built, broken, fixed, documented.</h2>
+    <p class="section-sub reveal">Real enterprise scenarios reproduced in my home lab — each with a full walkthrough and verification steps.</p>
+    <div class="labs-grid">
+
+      <a class="lab reveal" href="labs/lab-001.html">
+        <span class="lab-num">LAB // 001</span>
+        <h3>3-VM Active Directory Domain Lab</h3>
+        <p>Windows Server 2019 DC + two Win10 clients in VirtualBox. OU hierarchy, user/group structure, GPO policy chain, LSDOU ordering verified with gpresult /r.</p>
+        <div class="chips"><span class="chip">Server 2019</span><span class="chip">AD</span><span class="chip">GPO</span><span class="chip">VirtualBox</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+      <a class="lab reveal" href="labs/lab-002.html">
+        <span class="lab-num">LAB // 002</span>
+        <h3>LDAPS & PKI Certificate Lab</h3>
+        <p>AD Certificate Services with Enterprise Root CA, server certs issued, LDAPS enabled on 636. Secure bind verified with ldp.exe; TLS confirmed on AD queries.</p>
+        <div class="chips"><span class="chip">AD CS</span><span class="chip">PKI</span><span class="chip">LDAPS</span><span class="chip">ldp.exe</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+      <a class="lab reveal" href="labs/lab-003.html">
+        <span class="lab-num">LAB // 003</span>
+        <h3>PowerShell AD Automation Suite</h3>
+        <p>Bulk user creation from CSV with error handling, 90-day stale account detection, recursive Domain Admin audits with CSV export. Published on GitHub.</p>
+        <div class="chips"><span class="chip">PowerShell</span><span class="chip">New-ADUser</span><span class="chip">Automation</span><span class="chip">GitHub</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+      <a class="lab reveal" href="labs/lab-004.html">
+        <span class="lab-num">LAB // 004</span>
+        <h3>M365 Developer Tenant — E5 Sandbox</h3>
+        <p>25-seat E5 tenant: Conditional Access requiring MFA, mail flow rules, SPF/DKIM/DMARC, Message Trace, SSPR, and group-based licensing.</p>
+        <div class="chips"><span class="chip">M365 E5</span><span class="chip">Conditional Access</span><span class="chip">DMARC</span><span class="chip">SSPR</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+      <a class="lab reveal" href="labs/lab-005.html">
+        <span class="lab-num">LAB // 005</span>
+        <h3>DNS/DHCP Infrastructure Setup</h3>
+        <p>Forward/reverse zones with SRV records for DC location, DHCP scopes/exclusions/reservations, nslookup troubleshooting workflows and scavenging.</p>
+        <div class="chips"><span class="chip">DNS</span><span class="chip">DHCP</span><span class="chip">SRV</span><span class="chip">Kerberos</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+      <a class="lab reveal" href="labs/lab-006.html">
+        <span class="lab-num">LAB // 006</span>
+        <h3>AD Replication & Health Monitoring</h3>
+        <p>repadmin /showrepl, /replsummary, /syncall diagnostics plus dcdiag health checks. Intentionally broke replication, found root cause, wrote a full AAR.</p>
+        <div class="chips"><span class="chip">repadmin</span><span class="chip">dcdiag</span><span class="chip">AAR</span><span class="chip">ITIL</span></div>
+        <span class="lab-go">Read walkthrough →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CERTS ================= -->
+<section id="certs" style="background:var(--bg-2);border-block:1px solid var(--border)">
+  <div class="wrap">
+    <div class="kicker reveal">// certifications</div>
+    <h2 class="reveal">Earned & in progress</h2>
+    <p class="section-sub reveal">Continuous, verifiable learning — currently on the Microsoft identity track.</p>
+
+    <div class="certs-grid">
+      <div class="cert reveal">
+        <span class="badge">EARNED · FEB 2026</span>
+        <h3>🏥 Google IT Support (Healthcare)</h3>
+        <span>Google / Coursera · Johns Hopkins</span>
+      </div>
+      <div class="cert reveal">
+        <span class="badge">EARNED · DEC 2025</span>
+        <h3>🔒 Google Cybersecurity Certificate</h3>
+        <span>Google / Coursera</span>
+      </div>
+    </div>
+
+    <div class="progress-row">
+      <div class="prog reveal">
+        <div class="prog-top"><b>🔐 CompTIA Security+</b><span>CompTIA · in progress</span></div>
+        <div class="bar"><i style="width:60%"></i></div>
+      </div>
+      <div class="prog reveal">
+        <div class="prog-top"><b>☁ AZ-900 Azure Fundamentals</b><span>Microsoft · in progress</span></div>
+        <div class="bar"><i style="width:30%"></i></div>
+      </div>
+      <div class="prog reveal">
+        <div class="prog-top"><b>🛡 SC-300 Identity & Access Administrator</b><span>Microsoft · next up</span></div>
+        <div class="bar"><i style="width:5%"></i></div>
+      </div>
+      <div class="prog reveal">
+        <div class="prog-top"><b>⚔ TryHackMe — Windows Fundamentals 1–3 · AD Basics</b><span><a href="https://tryhackme.com/p/elazarferrer1" target="_blank" rel="noopener" style="color:var(--accent)">profile →</a></span></div>
+        <div class="bar"><i style="width:100%"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
 <section id="contact">
-  <div class="contact-wrap">
-    <div class="kicker" style="color:var(--neon-2); letter-spacing:3px; text-transform:uppercase; font-size:11px; margin-bottom:12px;">// Open Channel</div>
-    <h3>Let's automate something.</h3>
-    <p>If you're building something that needs AI or workflow automation — or you're a recruiter with a role in that space — I want to talk.</p>
-    <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-      <a class="btn" href="mailto:ferrerelazar@gmail.com">&gt; Email</a>
-      <a class="btn alt" href="./Elazar_Ferrer_Resume%20(2).pdf" target="_blank" rel="noopener">&gt; Résumé (PDF)</a>
-      <a class="btn ghost" href="https://linkedin.com/in/elazarf" target="_blank" rel="noopener">&gt; LinkedIn</a>
-      <a class="btn ghost" href="https://github.com/elazarf123" target="_blank" rel="noopener">&gt; GitHub</a>
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <div class="kicker">// contact</div>
+      <h2>Let's talk identity, access, and automation.</h2>
+      <p>Open to IT systems, identity administration, and security-focused roles — remote or in Texas. The fastest way to reach me:</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:elazarferrer1@gmail.com">✉ Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/elazarf/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/elazarf123" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="resume.html">Resume (PDF)</a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>© <span id="yr"></span> Elazar Ferrer · <span class="heartbeat">■</span> System online</div>
+  <div class="wrap">elazar@ferrer:~$ <a href="#top">back_to_top</a> · © <span id="yr"></span> Elazar Ferrer · Built by hand, no template</div>
 </footer>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // Subtle tilt on project cards
-  document.querySelectorAll('.project').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `translateY(-2px) perspective(900px) rotateX(${-y*2}deg) rotateY(${x*2}deg)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
+  // close mobile menu on click
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')));
 
-  // Occasional glitch flicker on the name
-  const g = document.querySelector('.glitch');
-  if (g) {
-    setInterval(() => {
-      g.style.textShadow = '2px 0 var(--neon-2), -2px 0 var(--neon-3)';
-      setTimeout(() => { g.style.textShadow = ''; }, 80);
-    }, 4200);
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // typed terminal
+  const lines = [
+    { html: '<span class="p">PS C:\\identity-lab&gt;</span> <span class="o">whoami</span>', d: 300 },
+    { html: '<span class="c">elazar.ferrer — IT Systems &amp; Identity Administrator</span>', d: 500 },
+    { html: '<span class="p">PS C:\\identity-lab&gt;</span> <span class="o">Get-Skills | Select -Top 4</span>', d: 700 },
+    { html: '<span class="ok">  ✔ Active Directory · GPO · PKI/LDAPS</span>', d: 250 },
+    { html: '<span class="ok">  ✔ Microsoft 365 · Entra ID · Conditional Access</span>', d: 250 },
+    { html: '<span class="ok">  ✔ PowerShell automation · bulk provisioning</span>', d: 250 },
+    { html: '<span class="ok">  ✔ NIST CSF · HIPAA · Security+ (in progress)</span>', d: 250 },
+    { html: '<span class="p">PS C:\\identity-lab&gt;</span> <span class="o">.\\Hire-Elazar.ps1 -Confirm:$false</span>', d: 800 },
+    { html: '<span class="ok">  STATUS : Ready. Response time &lt; 24h.</span>', d: 400 },
+  ];
+  const body = document.getElementById('termBody');
+  let i = 0;
+  function typeLine() {
+    if (i >= lines.length) { body.innerHTML += '<div><span class="p">PS C:\\identity-lab&gt;</span> <span class="cursor"></span></div>'; return; }
+    const div = document.createElement('div');
+    div.innerHTML = lines[i].html;
+    body.appendChild(div);
+    i++;
+    setTimeout(typeLine, lines[i - 1].d);
   }
+  setTimeout(typeLine, 600);
 </script>
-
 </body>
 </html>
